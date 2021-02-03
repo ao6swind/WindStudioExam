@@ -1,0 +1,11 @@
+{
+  "defaultProject": "app-frontend",
+  "projects": {
+    "app-frontend": {
+      "name": "My App",
+      "integrations": {},
+      "type": "angular",
+      "root": "app-frontend"
+    }
+  }
+}

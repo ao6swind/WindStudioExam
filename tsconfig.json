@@ -6,5 +6,24 @@
 */
 {
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./lib-model/tsconfig.lib.json"
+    },
+    {
+      "path": "./lib-model/tsconfig.spec.json"
+    },
+    {
+      "path": "./app-backend/tsconfig.app.json"
+    },
+    {
+      "path": "./app-backend/tsconfig.spec.json"
+    },
+    {
+      "path": "./app-frontend/tsconfig.app.json"
+    },
+    {
+      "path": "./app-frontend/tsconfig.spec.json"
+    }
+  ]
 }
