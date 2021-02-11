@@ -122,20 +122,9 @@
             </select>
           </div>
 
-          <!-- 題幹和註解 -->
-          <div class="row">
-            <div class="col-6">
-              <div class="form-group">
-                <label>題幹</label>
-                <ckeditor [(ngModel)]="question.content" [editor]="editor"></ckeditor>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="form-group">
-                <label>註解</label>
-                <ckeditor [(ngModel)]="question.comment" [editor]="editor"></ckeditor>
-              </div>
-            </div>
+          <div class="form-group">
+            <label>題幹</label>
+            <ckeditor [(ngModel)]="question.content" [editor]="editor"></ckeditor>
           </div>
 
           <!-- 選項 -->
@@ -157,7 +146,7 @@
                       <ng-container *ngSwitchCase="2">
                         <div class="input-group-prepend">
                           <div class="input-group-text">
-                            <input type="radio" name="question{{i}}" (click)="onOptionIsAnswerClicked(i, j)" [checked]="option.isAnswer">
+                            <input type="radio" name="question{{i}}" [value]="true" [checked]="option.isAnswer" (click)="onOptionIsAnswerClicked(i, j)">
                           </div>
                         </div>
                         <input type="text" class="form-control" [(ngModel)]="option.content">
@@ -167,7 +156,7 @@
                       <ng-container *ngSwitchCase="3">
                         <div class="input-group-prepend">
                           <div class="input-group-text">
-                            <input type="checkbox" name="question{{i}}" [(ngModel)]="option.isAnswer" [value]="true">
+                            <input type="checkbox" name="question{{i}}" [value]="true" [(ngModel)]="option.isAnswer">
                           </div>
                         </div>
                         <input type="text" class="form-control" [(ngModel)]="option.content">
@@ -177,7 +166,7 @@
                       <ng-container *ngSwitchCase="4">
                         <div class="input-group-prepend">
                           <div class="input-group-text">
-                            <input type="radio" name="question{{i}}" [(ngModel)]="option.isAnswer" (change)="onOptionIsAnswerClicked(i, j)">
+                            <input type="radio" name="question{{i}}" [value]="true" [checked]="option.isAnswer" (click)="onOptionIsAnswerClicked(i, j)">
                           </div>
                         </div>
                         <input type="file" class="form-control" accept="image/*" [(ngModel)]="option.content">
@@ -187,7 +176,7 @@
                       <ng-container *ngSwitchCase="5">
                         <div class="input-group-prepend">
                           <div class="input-group-text">
-                            <input type="checkbox" name="question{{i}}" [(ngModel)]="option.isAnswer" [value]="true">
+                            <input type="checkbox" name="question{{i}}" [value]="true" [(ngModel)]="option.isAnswer" >
                           </div>
                         </div>
                         <input type="file" class="form-control" accept="image/*" [(ngModel)]="option.content">
@@ -201,6 +190,11 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="form-group">
+            <label>註解</label>
+            <ckeditor [(ngModel)]="question.comment" [editor]="editor"></ckeditor>
           </div>
         </div>
       </div>

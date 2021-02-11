@@ -143,17 +143,22 @@ export class FormComponent implements OnInit {
       }
     });
   }
+  
+  /**
+   * 單選題設置正確答案
+   * @param i 子題索引
+   * @param j 選項索引
+   */
+  onOptionIsAnswerClicked(i: number, j: number): void {
+    this.questionSet.questions[i].options.forEach((option, index) => {
+      option.isAnswer = j == index;
+    });
+  }
 
   /**
    * 當點擊存檔時
    */
   onBtnSaveClicked(): void {
     
-  }
-
-  onOptionIsAnswerClicked(i: number, j: number): void {
-    this.questionSet.questions[i].options.map((option, index) => {
-      this.questionSet.questions[i].options[j].isAnswer = index === j;
-    });
   }
 }
