@@ -1,0 +1,34 @@
+<ion-split-pane contentId="main-content">
+  <ion-menu contentId="main-content" type="overlay">
+    <!--
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>目錄</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    -->
+
+    <ion-content>
+      <ion-list>
+        <ion-list-header>外部連結</ion-list-header>
+        <ion-item *ngFor="let link of links; let i = index" href="{{ link.url }}" target="_blank">
+          <ion-icon slot="start" name="{{ link.icon }}"></ion-icon>
+          <ion-label>{{ link.title }}</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>設定</ion-list-header>
+        <ion-item>
+          <ion-label>版本</ion-label>
+          <ion-text>1.0.0</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>深夜模式</ion-label>
+          <ion-toggle (ionChange)="onDarkModeChange($event)"></ion-toggle>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-split-pane>

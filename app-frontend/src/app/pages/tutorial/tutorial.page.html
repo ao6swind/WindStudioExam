@@ -1,9 +1,19 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tutorial</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
+  <ion-slides pager="true">
+    <ion-slide>
+      這裡準備放一些說明內容
+    </ion-slide>
+    <ion-slide>
+      這裡準備放一些注意事項
+    </ion-slide>
+    <ion-slide>
+      <div>
+        <p>準備好後</p>
+        <ion-button fill="clear" [routerLink]="['/']">
+          <span>進入系統</span>
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
