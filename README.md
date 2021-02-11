@@ -3,9 +3,20 @@
 -   app-backend: 上架用的後台（angular, bootstrap 4）
 -   app-frontend: 給學生練習用的網站（ionic）
 -   lib-model: 共用的資料模型
+-   ckeditor5: 後台會用到的文字編輯器
+
+# 注意事項
+
+-   第一次複製下來的專案要注意先建置 ckeditor 5
+    1. 移動到 ckeditor5 資料夾底下
+    2. 執行 npm install
+    3. 執行 npm run build
 
 # 編譯指令
 
+-   ckeditor
+    -   cd ckeditor5
+    -   npm run build
 -   app-backend
     -   ng serve -o
     -   ng serve -o -c=dev
@@ -53,3 +64,7 @@
     -   新增 schematics
         -   @ionic/angular-toolkit:component -> styleext: scss
         -   @ionic/angular-toolkit:page -> styleext: scss
+
+## Clone ckeditor 5
+
+刪掉一些用不到的檔案跟指令

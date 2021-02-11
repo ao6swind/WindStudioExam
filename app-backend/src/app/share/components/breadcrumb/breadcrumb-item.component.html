@@ -1,0 +1,24 @@
+<ng-container [ngSwitch]="!url" routerLinkActive="active">
+  <ng-container *ngSwitchCase="true">
+    <ng-container *ngTemplateOutlet="breadcrumbText"></ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="false">
+    <ng-container *ngTemplateOutlet="breadcrumbLink"></ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #breadcrumbText>
+  <span>
+    <ng-container *ngTemplateOutlet="breadcrumbContent"></ng-container>
+  </span>
+</ng-template>
+
+<ng-template #breadcrumbLink>
+  <a routerLink="{{ url }}">
+    <ng-container *ngTemplateOutlet="breadcrumbContent"></ng-container>
+  </a>
+</ng-template>
+
+<ng-template #breadcrumbContent>
+  <ng-content></ng-content>
+</ng-template>

@@ -1,5 +1,5 @@
 /**
- * 標籤
+ * 分類標籤
  */
 export interface Tag {
     id: number;
@@ -11,5 +11,8 @@ export interface Tag {
      * 文字
      */
     text: string;
+    /**
+     * 子分類標籤集合
+     */
     tags: Tag[];
 }

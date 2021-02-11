@@ -1,0 +1,9 @@
+@import "../../../../scss/variable.scss";
+
+@media (min-width: $break-point) {
+    div {
+        min-height: calc(100vh - 162px);
+        max-height: calc(100vh - 162px);
+        overflow: auto;
+    }
+}

@@ -1,0 +1,8 @@
+.table-sticky {
+    border-collapse: separate;
+    border-spacing: 0;
+    thead tr th {
+        position: sticky;
+        top: 0;
+    }
+}

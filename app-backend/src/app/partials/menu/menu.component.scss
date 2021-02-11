@@ -1,0 +1,32 @@
+@import "../../../scss/variable.scss";
+
+aside {
+    min-height: calc(100vh - 57px);
+    max-height: calc(100vh - 57px);
+}
+.pnl-toggler {
+    display: none;
+}
+@media (min-width: $break-point) {
+    .pnl-toggler {
+        display: inline;
+        cursor: pointer;
+        position: fixed;
+        top: calc((100vh - 56px) / 2);
+        left: 199px;
+        transition: left 0.5s;
+        width: 25px;
+        height: 50px;
+        border-radius: 0px 25px 25px 0px;
+    }
+    :host-context(.open-menu) {
+        .pnl-toggler {
+            left: 199px;
+        }
+    }
+    :host-context(.hide-menu) {
+        .pnl-toggler {
+            left: 0px;
+        }
+    }
+}

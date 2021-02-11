@@ -17,9 +17,9 @@ export enum QuestionType {
     /**
      * 圖片單選題
      */
-    SingleChoiceImage = 2,
+    SingleChoiceImage = 4,
     /**
      * 圖片複選題
      */
-    MultipleChoiceImage = 3,
+    MultipleChoiceImage = 5,
 }

@@ -1,0 +1,22 @@
+.btn-toggle[aria-expanded="true"]::after {
+    content: "－";
+    text-decoration: none;
+}
+
+.btn-toggle[aria-expanded="false"]::after {
+    content: "＋";
+    text-decoration: none;
+}
+
+.btn-nochild::after {
+    content: "　";
+}
+
+.btn-toggle:hover {
+    text-decoration: none;
+}
+
+.btn-nochild:hover {
+    text-decoration: none;
+    cursor: default;
+}

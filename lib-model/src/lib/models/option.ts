@@ -2,13 +2,13 @@
  * 選項
  */
 export interface Option {
-    id: number;
+    id?: number;
     /**
      * 是否為答案
      */
-    isAnswer: boolean;
+    isAnswer?: boolean;
     /**
      * 選項內容
      */
-    content: string;
+    content?: string;
 }

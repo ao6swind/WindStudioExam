@@ -1,0 +1,72 @@
+<app-breadcrumb>
+  <app-breadcrumb-item [url]="'/'">首頁</app-breadcrumb-item>
+  <app-breadcrumb-item>題目管理</app-breadcrumb-item>
+</app-breadcrumb>
+
+<app-panel-group>
+  <app-panel [width]="200">
+    <a class="btn btn-primary" [routerLink]="['/questions/create']">
+      <div><i class="bi bi-plus display-4"></i></div>
+      <div>新增題目</div>
+    </a>
+  </app-panel>
+  <app-panel [padding]="false">
+    <div class="table-responsive">
+      <table class="table table-sticky table-hover">
+        <thead>
+          <tr>
+            <th class="border-top-0 bg-light text-nowrap">類型</th>
+            <th class="border-top-0 bg-light text-nowrap">題幹</th>
+            <th class="border-top-0 bg-light text-nowrap">介面</th>
+            <th class="border-top-0 bg-light text-nowrap">出處</th>
+            <th class="border-top-0 bg-light text-nowrap"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let questionSet of questionSets; let i = index">
+            <ng-container *ngFor="let question of questionSet.questions; let j = index">
+              <tr>
+                <td class="text-nowrap" *ngIf="j === 0" [attr.rowspan]="questionSet.questions.length">
+                  <ng-container [ngSwitch]="questionSet.questions.length > 1">
+                    <span *ngSwitchCase="true">題組</span>
+                    <span *ngSwitchCase="false">單題</span>
+                  </ng-container>
+                </td>
+                <td>
+                  <div>{{ question.content }}</div>
+                  <div *ngIf="questionSet.tags.length > 0" class="mt-2">
+                    <span class="badge rounded-pill bg-secondary text-white mr-2 p-2" *ngFor="let tag of questionSet.tags">
+                      {{ tag }}
+                    </span>
+                  </div>
+                </td>
+                <td class="text-nowrap">{{ question.type | getQuestionType }}</td>
+                <td class="text-nowrap">
+                  <a [attr.href]="questionSet.url" target="_blank">
+                    {{ questionSet.source }}
+                  </a>
+                </td>
+                <td class="text-nowrap">
+                  <ul class="list-inline">
+                    <li class="list-inline-item">
+                      <a class="text-success" [routerLink]="['edit', questionSet.id]">
+                        <i class="bi bi-pencil"></i>
+                        <span class="ml-2">編輯</span>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="text-danger" (click)="onBtnRemoveQuestionClicked()">
+                        <i class="bi bi-trash"></i>
+                        <span class="ml-2">刪除</span>
+                      </a>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </app-panel>
+</app-panel-group>

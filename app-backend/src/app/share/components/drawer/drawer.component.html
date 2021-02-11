@@ -1,0 +1,24 @@
+<div class="pnl-drawer" [ngClass]="{'show': isOpen}">
+  <div class="pnl-drawer-background"></div>
+  <div class="pnl-drawer-body bg-white" [ngClass]="{'is-expand': isExpand}">
+    <div class="pnl-loading" *ngIf="isBusy">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div class="navbar navbar-dark navbar-expand-sm bg-primary">
+      <span class="navbar-brand mr-auto ml-3 ml-sm-0" id="txtDrawerTitle">{{ title }}</span>
+      <span class="navbar-text ml-3 text-white btn-ctrl d-none d-sm-block" (click)="onBtnExpandClicked()" libTooltip
+        title="{{ ((isExpand) ? '視窗化' : '全螢幕')  }}">
+        <i class="bi" [ngClass]="{ 'bi-fullscreen-exit': isExpand, 'bi-fullscreen': !isExpand }"></i>
+      </span>
+      <span class="navbar-text ml-3 text-white btn-ctrl" (click)="onBtnCloseClicked()" libTooltip
+        title="關閉">
+        <i class="bi bi-x"></i>
+      </span>
+    </div>
+    <div class="pnl-drawer-content p-3">
+      <ng-container #template translate></ng-container>
+    </div>
+  </div>
+</div>

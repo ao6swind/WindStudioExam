@@ -2,6 +2,7 @@
 
 **/environment.prod.ts
 **/environment.dev.ts
+app-backend/src/assets/ckeditor/**
 
 # compiled output
 /dist

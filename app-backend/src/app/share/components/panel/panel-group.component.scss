@@ -1,0 +1,17 @@
+@import "../../../../scss/variable.scss";
+
+:host ::ng-deep app-panel:not(:last-child) {
+    border-right: 0px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}
+
+@media (min-width: $break-point) {
+    :host ::ng-deep app-panel:not(:last-child) {
+        border-right: 1px solid #dee2e6;
+        border-bottom: 0px solid #dee2e6;
+    }
+
+    :host ::ng-deep app-panel {
+        width: 0px;
+    }
+}

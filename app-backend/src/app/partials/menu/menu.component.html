@@ -1,0 +1,17 @@
+<aside class="pt-3 bg-light border-right">
+  <ul class="list-unstyled">
+    <li class="nav-item" routerLinkActive="active" *ngFor="let menu of menus">
+      <a class="nav-link" [routerLink]="menu.url">
+        {{ menu.title }}
+      </a>
+    </li>
+  </ul>
+</aside>
+<div class="pnl-toggler border border-left-0 d-flex bg-light" (click)="onBtnTogglerClicked()">
+  <span class="align-self-center">
+    <i class="bi" [ngClass]="{ 
+      'bi-arrow-left': isMenuOpen,
+      'bi-arrow-right': !isMenuOpen 
+    }"></i>
+  </span>
+</div>

@@ -1,0 +1,29 @@
+<ul class="list-unstyled ml-3">
+  <li *ngFor="let tag of tags; let i = index">
+    <span>
+      <a [ngClass]="{'btn-toggle': tag.tags && tag.tags.length > 0, 'btn-nochild': !tag.tags || tag.tags.length === 0 }" 
+        data-toggle="collapse" 
+        aria-expanded="true" 
+        href="#pnlLevel1Children{{i}}"></a>
+      <a class="ml-3" (click)="onTagClicked(tag.text)">{{ tag.text }}</a>
+    </span>
+    <ul class="list-unstyled ml-3 collapse show" id="pnlLevel1Children{{i}}" *ngIf="tag.tags && tag.tags.length > 0">
+      <li *ngFor="let tag of tag.tags; let j = index">
+        <span>
+          <a [ngClass]="{'btn-toggle': tag.tags && tag.tags.length > 0, 'btn-nochild': !tag.tags || tag.tags.length === 0 }"
+            data-toggle="collapse" 
+            aria-expanded="true" 
+            href="#pnlLevel2Children{{i}}{{j}}"></a>
+          <a class="ml-3" (click)="onTagClicked(tag.text)">{{ tag.text }}</a>
+        </span>
+        <ul class="list-unstyled ml-3 collapse show" id="pnlLevel2Children{{i}}{{j}}" *ngIf="tag.tags && tag.tags.length > 0">
+          <li *ngFor="let tag of tag.tags; let k = index">
+            <span>
+              <a class="ml-3 pl-3" (click)="onTagClicked(tag.text)">{{ tag.text }}</a>
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>

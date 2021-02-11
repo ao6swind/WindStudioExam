@@ -1,0 +1,8 @@
+@import "~bootstrap/scss/bootstrap";
+
+.nav-item {
+    border-right: 5px solid transparent;
+}
+.nav-item.active {
+    border-right: 5px solid $primary;
+}

@@ -1,0 +1,209 @@
+<app-breadcrumb>
+  <app-breadcrumb-item [url]="'/'">首頁</app-breadcrumb-item>
+  <app-breadcrumb-item [url]="'/questions'">題目管理</app-breadcrumb-item>
+  <app-breadcrumb-item>
+    <ng-container [ngSwitch]="isCreateMode">
+      <ng-container *ngSwitchCase="true">
+        新增題目
+      </ng-container>
+      <ng-container *ngSwitchCase="false">
+        修改題目
+      </ng-container>
+    </ng-container>
+  </app-breadcrumb-item>
+</app-breadcrumb>
+
+<app-panel-group>
+  <app-panel [width]="200">
+    <div class="row">
+      <div class="col-6 col-md-12 mb-md-3">
+        <button class="btn btn-primary btn-block" (click)="onBtnAddQuestionClicked()">
+          <div><i class="bi bi-plus display-4"></i></div>
+          <div>增加子題</div>
+        </button>
+      </div>
+      <div class="col-6 col-md-12 mb-md-3">
+        <button class="btn btn-primary btn-block" (click)="onBtnSaveClicked()">
+          <div><i class="bi bi-save display-4"></i></div>
+          <div>儲存</div>
+        </button>
+      </div>
+    </div>
+  </app-panel>
+  <app-panel [padding]="false">
+    <ul class="nav nav-pills border-bottom">
+      <li class="nav-item">
+        <a class="nav-link rounded-0" data-toggle="tab" href="#pnlJson">JSON</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link rounded-0 active" data-toggle="tab" href="#pnlMetadata">題目資訊</a>
+      </li>
+      <li class="nav-item" *ngFor="let question of questionSet?.questions; let i = index">
+        <a class="nav-link rounded-0" data-toggle="tab" href="#pnlQuestion{{i}}">
+          第{{i+1}}題
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <!-- JSON預覽 -->
+      <div class="tab-pane fade show p-3" id="pnlJson">
+        <pre>{{ questionSet | json }}</pre>
+      </div>
+
+      <!-- 題目資訊 -->
+      <div class="tab-pane fade show active p-3" id="pnlMetadata">
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label>來源</label>
+              <input class="form-control" name="source" [(ngModel)]="questionSet.source">
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="form-group">
+              <label>連結</label>
+              <input class="form-control" name="url" [(ngModel)]="questionSet.url">
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>
+            <span>分類標籤</span>
+          </label>
+          <div class="bg-light border rounded p-3">
+            <button class="btn btn-sm btn-primary mr-3" (click)="onBtnAddTagClicked()">
+              <i class="bi bi-plus"></i>
+            </button>
+            <ng-container [ngSwitch]="questionSet.tags && questionSet.tags.length > 0">
+              <span *ngSwitchCase="true">
+                <span class="badge rounded-pill bg-secondary text-white mr-2 p-2" *ngFor="let tag of questionSet.tags">
+                  <span>{{ tag }}</span>
+                  <a class="ml-2 text-white" (click)="onBtnRemoveTagClick(tag)">
+                    <i class="bi bi-x"></i>
+                  </a>
+                </span>
+              </span>
+              <span *ngSwitchCase="false">
+                <i class="text-secondary">尚未添加標籤</i>
+              </span>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>題組前文</label>
+          <ckeditor [(ngModel)]="questionSet.content" [editor]="editor" [config]="config"></ckeditor>
+        </div>
+      </div>
+
+      <!-- 子題 -->
+      <div class="tab-pane fade" id="pnlQuestion{{i}}" *ngFor="let question of questionSet?.questions; let i = index">
+        <div class="d-flex bg-light border-bottom">
+          <div class="flex-fill align-self-center pl-3">
+            <ng-container *ngIf="questionSet.tags && questionSet.tags.length > 0" class="mt-2">
+              <span class="badge rounded-pill bg-secondary text-white mr-2 p-2" *ngFor="let tag of questionSet.tags">
+                {{ tag }}
+              </span>
+            </ng-container>
+          </div>
+          <button class="btn btn-danger rounded-0" (click)="onBtnRemoveQuestionClicked(i)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+        <div class="p-3">
+          <div class="form-group">
+            <label>類型</label>
+            <select class="form-control" name="type" [(ngModel)]="question.type" (change)="onQuestionTypeChanged(i)">
+              <option [value]="null">請選擇題目類型</option>
+              <option *ngFor="let questionType of questionTypeEnum | enumToArray" [value]="questionType.key">
+                {{ questionType.key | getQuestionType }}
+              </option>
+            </select>
+          </div>
+
+          <!-- 題幹和註解 -->
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label>題幹</label>
+                <ckeditor [(ngModel)]="question.content" [editor]="editor"></ckeditor>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label>註解</label>
+                <ckeditor [(ngModel)]="question.comment" [editor]="editor"></ckeditor>
+              </div>
+            </div>
+          </div>
+
+          <!-- 選項 -->
+          <div class="form-group" *ngIf="question.type !== null && question.type !== 1">
+            <div class="row">
+              <div class="col-2">
+                <button class="btn btn-block btn-primary" (click)="onBtnAddOptionClicked(i)">新增選項</button>
+              </div>
+              <div class="col-10">
+                <div *ngFor="let option of question.options; let j = index">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <span>選項{{ j +1 }}</span>
+                      </div>
+                    </div>
+                    <ng-container [ngSwitch]="question.type">
+                      <!-- 文字單選題 -->
+                      <ng-container *ngSwitchCase="2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="radio" name="question{{i}}" (click)="onOptionIsAnswerClicked(i, j)" [checked]="option.isAnswer">
+                          </div>
+                        </div>
+                        <input type="text" class="form-control" [(ngModel)]="option.content">
+                      </ng-container>
+                      
+                      <!-- 文字複選題 -->
+                      <ng-container *ngSwitchCase="3">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="checkbox" name="question{{i}}" [(ngModel)]="option.isAnswer" [value]="true">
+                          </div>
+                        </div>
+                        <input type="text" class="form-control" [(ngModel)]="option.content">
+                      </ng-container>
+
+                      <!-- 圖片單選題 -->
+                      <ng-container *ngSwitchCase="4">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="radio" name="question{{i}}" [(ngModel)]="option.isAnswer" (change)="onOptionIsAnswerClicked(i, j)">
+                          </div>
+                        </div>
+                        <input type="file" class="form-control" accept="image/*" [(ngModel)]="option.content">
+                      </ng-container>
+
+                      <!-- 圖片複選題 -->
+                      <ng-container *ngSwitchCase="5">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="checkbox" name="question{{i}}" [(ngModel)]="option.isAnswer" [value]="true">
+                          </div>
+                        </div>
+                        <input type="file" class="form-control" accept="image/*" [(ngModel)]="option.content">
+                      </ng-container>
+                    </ng-container>
+
+                    <div class="input-group-append">
+                      <button class="btn btn-danger" (click)="onBtnRemoveOptionClicked(i, j)">移除選項</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-panel>
+</app-panel-group>

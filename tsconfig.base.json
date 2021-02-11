@@ -21,7 +21,7 @@
         "dist/lib-model",
         "dist/lib-model/lib-model",
         "dist/lib-model",
-        "lib-model"
+        "lib-model/src/public-api"
       ]
     }
   }
