@@ -11,6 +11,7 @@ import { QuestionSet } from 'lib-model';
 })
 export class IndexComponent implements OnInit {
 
+  count: number = 500;
   questionSets: QuestionSet[] = [];
 
   constructor(

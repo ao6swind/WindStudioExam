@@ -7,20 +7,24 @@ import { QuestionComponent } from './question.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: QuestionComponent,
     children: [
       {
-        path: "",
+        path: ':pageSize/:pageNumber',
         component: IndexComponent
       },
       {
-        path: "create",
+        path: 'create',
         component: FormComponent
       },
       {
-        path: "edit/:id",
+        path: 'edit/:id',
         component: FormComponent
+      },
+      {
+        path: '',
+        redirectTo: '10/1'
       }
     ]
   }

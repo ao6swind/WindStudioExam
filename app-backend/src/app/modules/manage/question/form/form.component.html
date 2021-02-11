@@ -109,6 +109,7 @@
           </div>
           <button class="btn btn-danger rounded-0" (click)="onBtnRemoveQuestionClicked(i)">
             <i class="bi bi-trash"></i>
+            <span class="ml-2">移除子題</span>
           </button>
         </div>
         <div class="p-3">
@@ -130,10 +131,13 @@
           <!-- 選項 -->
           <div class="form-group" *ngIf="question.type !== null && question.type !== 1">
             <div class="row">
-              <div class="col-2">
-                <button class="btn btn-block btn-primary" (click)="onBtnAddOptionClicked(i)">新增選項</button>
+              <div class="col-12 col-md-4 col-lg-2">
+                <button class="btn btn-block btn-primary" (click)="onBtnAddOptionClicked(i)">
+                  <i class="bi bi-plus"></i>
+                  <span class="ml-2 text-nowrap">增加選項</span>
+                </button>
               </div>
-              <div class="col-10">
+              <div class="col-12 col-md-8 col-lg-10">
                 <div *ngFor="let option of question.options; let j = index">
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -184,7 +188,10 @@
                     </ng-container>
 
                     <div class="input-group-append">
-                      <button class="btn btn-danger" (click)="onBtnRemoveOptionClicked(i, j)">移除選項</button>
+                      <button class="btn btn-danger" (click)="onBtnRemoveOptionClicked(i, j)">
+                        <i class="bi bi-trash"></i>
+                        <span class="ml-2 text-nowrap">移除選項</span>
+                      </button>
                     </div>
                   </div>
                 </div>

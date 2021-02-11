@@ -1,0 +1,35 @@
+<div class="d-flex align-items-center p-3 pt-0 justify-content-end">
+  <div class="pnl-component">
+    <select class="form-control" 
+      title="分頁大小" tooltip 
+      (change)="onPageSizeChange($event)"
+      [(ngModel)]="pageSize">
+      <option *ngFor="let size of sizes" [value]="size">{{ size }}</option>
+    </select>
+  </div>
+  <div class="pnl-component">
+    <button class="btn btn-secondary" 
+      title="上一頁" tooltip
+      (click)="onBtnPreviousClick()" >
+      <i class="bi bi-arrow-left"></i>
+    </button>
+  </div>
+  <div class="pnl-component">
+    <input class="form-control text-center" 
+      title="頁碼" tooltip 
+      type="number" min="1" max="{{ lastPage }}" step="1" 
+      (change)="onPageNumberChange($event)"
+      [(ngModel)]="pageNumber">
+  </div>
+  <div class="pnl-component">
+    <span class="mr-2">/</span>
+    <span>{{ lastPage }}</span>
+  </div>
+  <div class="pnl-component">
+    <a class="btn btn-secondary" 
+      title="下一頁" tooltip
+      (click)="onBtnNextClick()" >
+      <i class="bi bi-arrow-right"></i>
+    </a>
+  </div>
+</div>
