@@ -11,16 +11,16 @@ const routes: Routes = [
     component: QuestionComponent,
     children: [
       {
-        path: ':pageSize/:pageNumber',
-        component: IndexComponent
+        path: 'edit/:id',
+        component: FormComponent
       },
       {
         path: 'create',
         component: FormComponent
       },
       {
-        path: 'edit/:id',
-        component: FormComponent
+        path: ':pageSize/:pageNumber',
+        component: IndexComponent
       },
       {
         path: '',

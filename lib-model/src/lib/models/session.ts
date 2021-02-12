@@ -2,7 +2,7 @@
  * 測驗梯次
  */
 export interface Session {
-    id?: number;
+    id?: string;
     /**
      * 報名開始
      */

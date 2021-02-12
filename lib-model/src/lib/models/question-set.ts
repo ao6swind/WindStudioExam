@@ -3,7 +3,7 @@ import { Question } from './question';
  * 題目
  */
 export interface QuestionSet {
-    id?: number;
+    id?: string;
     /**
      * 來源
      */

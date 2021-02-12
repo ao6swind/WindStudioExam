@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "windstudio-exam": {
+      "hosting": {
+        "app-backend": [
+          "windstudio-exam"
+        ]
+      }
+    }
+  }
+}

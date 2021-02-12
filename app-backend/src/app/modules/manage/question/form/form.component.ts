@@ -159,6 +159,16 @@ export class FormComponent implements OnInit {
    * 當點擊存檔時
    */
   onBtnSaveClicked(): void {
-    
+    switch(this.isCreateMode) {
+      case true:
+        this.questionService.add(this.questionSet);
+        break;
+      case false:
+        this.questionService.update(this.questionSet)
+          .then(() => {
+            
+          });
+        break;
+    }
   }
 }

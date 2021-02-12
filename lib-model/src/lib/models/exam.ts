@@ -3,7 +3,7 @@ import { Session } from './session';
  * 測驗
  */
 export interface Exam {
-    id?: number;
+    id?: string;
     /**
      * 年度
      */

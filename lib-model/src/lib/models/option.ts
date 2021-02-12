@@ -2,7 +2,7 @@
  * 選項
  */
 export interface Option {
-    id?: number;
+    id?: string;
     /**
      * 是否為答案
      */

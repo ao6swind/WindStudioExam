@@ -4,7 +4,7 @@ import { QuestionType } from './../enums/question-type';
  * 子題
  */
 export interface Question {
-    id?: number;
+    id?: string;
     /**
      * 題目類型
      */

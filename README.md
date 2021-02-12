@@ -68,3 +68,7 @@
 ## Clone ckeditor 5
 
 刪掉一些用不到的檔案跟指令
+
+## 其它套件
+
+-   ng add @angular/fire

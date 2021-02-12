@@ -17,20 +17,22 @@ export class IndexComponent implements OnInit {
   constructor(
     private confirm: ConfirmService,
     private questionService: QuestionService
-  ) { }
+  ) { 
+    
+  }
 
   ngOnInit() {
-    this.questionService.list().subscribe((result) => {
+    this.questionService.list(10, this.questionSets).subscribe((result) => {
       this.questionSets = result;
     });
   }
 
-  onBtnRemoveQuestionClicked(): void {
+  onBtnRemoveQuestionClicked(id: string): void {
     this.confirm.show({
       title: '刪除題目',
       message: '此動作將會移除資料庫中的題目，你確定嗎？',
       confirmed: () => {
-        
+        this.questionService.delete(id);
       }
     });
   }

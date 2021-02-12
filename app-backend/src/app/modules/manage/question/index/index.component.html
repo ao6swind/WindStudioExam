@@ -49,13 +49,13 @@
                 <td class="text-nowrap">
                   <ul class="list-inline">
                     <li class="list-inline-item">
-                      <a class="text-success" [routerLink]="['edit', questionSet.id]">
+                      <a class="text-success" [routerLink]="['/questions/edit', questionSet.id]">
                         <i class="bi bi-pencil"></i>
                         <span class="ml-2">編輯</span>
                       </a>
                     </li>
                     <li class="list-inline-item">
-                      <a class="text-danger" (click)="onBtnRemoveQuestionClicked()">
+                      <a class="text-danger" (click)="onBtnRemoveQuestionClicked(questionSet.id)">
                         <i class="bi bi-trash"></i>
                         <span class="ml-2">刪除</span>
                       </a>
