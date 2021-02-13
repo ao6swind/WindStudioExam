@@ -1,0 +1,28 @@
+<form #form="ngForm">
+  <div class="form-group">
+    <label>標題</label>
+    <input class="form-control" name="title" required [(ngModel)]="link.title" #title="ngModel">
+  </div>
+  
+  <div class="form-group">
+    <label>網址</label>
+    <input class="form-control" name="url" type="url" required [(ngModel)]="link.url" #url="ngModel">
+  </div>
+  
+  <div class="form-group">
+    <label>圖示</label>
+    <select class="form-control" name="icon" required [(ngModel)]="link.icon" #icon="ngModel">
+      <option [value]="null">請選擇圖示</option>
+      <option *ngFor="let icon of icons | enumToArray" [value]="icon.key">
+        {{ icon.key | getLinkIcon }}
+      </option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <button class="btn btn-primary btn-block" (click)="onBtnSaveClicked()" [disabled]="form.invalid">
+      <div><i class="bi bi-save display-4"></i></div>
+      <div>儲存</div>
+    </button>
+  </div>
+</form>

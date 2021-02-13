@@ -9,7 +9,7 @@ export class GetQuestionTypePipe implements PipeTransform {
 
   transform(type: QuestionType): string {
     let label = '';
-    switch(type) {
+    switch(+type) {
       case QuestionType.Thesis:
         label = '申論題';
         break;

@@ -1,9 +1,9 @@
 import * as ClassicEditor from './../../../../../assets/ckeditor/ckeditor.js';
 
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { QuestionSet, QuestionType } from 'lib-model';
 
-import { ActivatedRoute } from '@angular/router';
 import { ConfirmService } from './../../../../services/ui/confirm.service';
 import { DrawerService } from './../../../../services/ui/drawer.service';
 import { QuestionService } from './../../../../services/api/question.service';
@@ -32,14 +32,17 @@ export class FormComponent implements OnInit {
     url: null,
     content: null,
     tags: [ ],
-    questions: [ ]
+    questions: [ ],
+    createdAt: null,
+    updatedAt: null,
   };
 
   constructor(
     private questionService: QuestionService, 
     private confirm: ConfirmService,
     private drawer: DrawerService, 
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { 
     this.onTagSelectedHandler.subscribe((tag) => {
       if(this.questionSet.tags.indexOf(tag) < 0) {
@@ -159,16 +162,29 @@ export class FormComponent implements OnInit {
    * 當點擊存檔時
    */
   onBtnSaveClicked(): void {
-    switch(this.isCreateMode) {
-      case true:
-        this.questionService.add(this.questionSet);
-        break;
-      case false:
-        this.questionService.update(this.questionSet)
-          .then(() => {
-            
-          });
-        break;
+    if(this.questionSet.questions.length > 0) {
+      switch(this.isCreateMode) {
+        case true:
+          this.questionSet.createdAt = Date.now();
+          this.questionService.add(this.questionSet)
+            .then(() => {
+              this.router.navigate(['/questions']);
+            });
+          break;
+        case false:
+          this.questionSet.updatedAt = Date.now();
+          this.questionService.update(this.questionSet)
+            .then(() => {
+              this.router.navigate(['/questions']);
+            });
+          break;
+      }
+    } else {
+      this.confirm.show({
+        title: '資料驗證失敗',
+        message: '子題數量不可少於1題',
+        hasCancel: false
+      });
     }
   }
 }

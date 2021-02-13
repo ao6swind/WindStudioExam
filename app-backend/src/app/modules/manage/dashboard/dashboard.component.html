@@ -1,3 +1,25 @@
 <app-breadcrumb>
   <app-breadcrumb-item>首頁</app-breadcrumb-item>
 </app-breadcrumb>
+
+<app-panel-group>
+  <app-panel>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">題目</h5>
+        <p class="card-text">已收錄 {{ questionCount }} 題</p>
+        <a [routerLink]="['/questions']">前往管理</a>
+      </div>
+    </div>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">連結</h5>
+        <p class="card-text">已分享 {{ questionCount }} 個</p>
+        <a [routerLink]="['/links']">前往管理</a>
+      </div>
+    </div>
+  </app-panel>
+  <app-panel>
+    
+  </app-panel>
+</app-panel-group>

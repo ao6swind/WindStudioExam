@@ -2,57 +2,54 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Tag } from 'lib-model';
-import { environment } from '../../../environments/environment';
-import { map } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
 export class TagService {
 
+  private collection = 'Tags'
+
   constructor(private http: HttpClient, private store: AngularFirestore) { }
 
-  list() {
-    if(environment.useFirebase) {
-      return this.store.collection<Tag>('Tags', ref => ref.limit(10)).snapshotChanges()
-        .pipe(
-          map((actions) => { 
-            return actions.map(a => {
-              const data = a.payload.doc.data();
-              const id = a.payload.doc.id;
-              return { id, ...data };
-            }) 
-          })
-        );
+  list(config?: { pageSize?: number, responseLast?: any , responseFirst?: any }) {
+    if(!config?.pageSize) {
+      return this.store.collection<Tag>(this.collection, ref => ref
+        .orderBy('text', 'asc')
+      ).snapshotChanges();
+    } else if(!config?.responseLast && !config?.responseFirst) {
+      return this.store.collection<Tag>(this.collection, ref => ref
+        .limit(config?.pageSize)
+        .orderBy('text', 'asc')
+      ).snapshotChanges();
+    } else if (config?.responseLast && !config?.responseFirst) {
+      return this.store.collection<Tag>(this.collection, ref => ref
+        .limit(config?.pageSize)
+        .orderBy('text', 'asc')
+        .startAfter(config?.responseLast)
+      ).snapshotChanges();
     } else {
-      return this.http.get<Tag[]>(`${environment.host}/${environment.api.tag.list}`);
+      return this.store.collection<Tag>(this.collection, ref => ref
+        .limit(config?.pageSize)
+        .orderBy('text', 'asc')
+        .endBefore(config?.responseFirst)
+      ).snapshotChanges();
     }
   }
 
   add(tag: Tag) {
-    if(environment.useFirebase) {
-      return this.store.collection<Tag>('Tags').add(tag);
-    } else {
-      return new Promise((resolve) => { resolve(null); });
-    }
+    return this.store.collection<Tag>(this.collection).add(tag);
   }
 
   update(tag: Tag) {
-    if(environment.useFirebase) {
-      return this.store.collection<Tag>('Tags')
-        .doc(tag.id)
-        .update(tag);
-    } else {
-      return new Promise<void>((resolve) => { resolve(); });
-    }
+    return this.store.collection<Tag>(this.collection)
+      .doc(tag.id)
+      .update(tag);
   }
 
   delete(id: string) {
-    if(environment.useFirebase) {
-      return this.store.collection<Tag>('Tags')
-        .doc(id)
-        .delete();
-    } else {
-      return new Promise<void>((resolve) => { resolve(); });
-    }
+    return this.store.collection<Tag>(this.collection)
+      .doc(id)
+      .delete();
   }
 }

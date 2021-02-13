@@ -1,50 +1,50 @@
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { QuestionSet } from 'lib-model';
+import { Link } from 'lib-model';
 import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class QuestionService {
+export class LinkService {
 
-  private collection = 'QuestionSets'
+  private collection = 'Links'
 
   constructor(private store: AngularFirestore) { }
 
   count() {
-    return this.store.collection<QuestionSet>(this.collection)
+    return this.store.collection<Link>(this.collection)
       .valueChanges()
       .pipe(map(actions => actions.length));
   }
 
   list(config?: { pageSize?: number, responseLast?: any , responseFirst?: any }) {
     if(!config?.pageSize) {
-      return this.store.collection<QuestionSet>(this.collection, ref => ref
-        .orderBy('createdAt', 'desc')
+      return this.store.collection<Link>(this.collection, ref => ref
+        .orderBy('title', 'asc')
       ).snapshotChanges();
     } else if(!config?.responseLast && !config?.responseFirst) {
-      return this.store.collection<QuestionSet>(this.collection, ref => ref
+      return this.store.collection<Link>(this.collection, ref => ref
         .limit(config?.pageSize)
-        .orderBy('createdAt', 'desc')
+        .orderBy('title', 'asc')
       ).snapshotChanges();
     } else if (config?.responseLast && !config?.responseFirst) {
-      return this.store.collection<QuestionSet>(this.collection, ref => ref
+      return this.store.collection<Link>(this.collection, ref => ref
         .limit(config?.pageSize)
-        .orderBy('createdAt', 'desc')
+        .orderBy('title', 'asc')
         .startAfter(config?.responseLast)
       ).snapshotChanges();
     } else {
-      return this.store.collection<QuestionSet>(this.collection, ref => ref
+      return this.store.collection<Link>(this.collection, ref => ref
         .limit(config?.pageSize)
-        .orderBy('createdAt', 'desc')
+        .orderBy('title', 'asc')
         .endBefore(config?.responseFirst)
       ).snapshotChanges();
     }
   }
 
   get(id: string) {
-    return this.store.collection<QuestionSet>(this.collection)
+    return this.store.collection<Link>(this.collection)
       .doc(id)
       .get()
       .pipe(
@@ -56,20 +56,15 @@ export class QuestionService {
       );
   }
 
-  add(questionSet: QuestionSet) {
-    return this.store.collection<QuestionSet>(this.collection)
-      .add(questionSet);
+  add(link: Link) {
+    return this.store.collection<Link>(this.collection).add(link);
   }
 
-  update(questionSet: QuestionSet) {
-    return this.store.collection<QuestionSet>(this.collection)
-      .doc(questionSet.id)
-      .update(questionSet);
+  update(link: Link) {
+    return this.store.collection<Link>(this.collection).doc(link.id).update(link);
   }
 
   delete(id: string) {
-    return this.store.collection<QuestionSet>(this.collection)
-      .doc(id)
-      .delete();
+    return this.store.collection<Link>(this.collection).doc(id).delete();
   }
 }

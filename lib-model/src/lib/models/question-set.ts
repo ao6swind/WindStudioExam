@@ -24,4 +24,12 @@ export interface QuestionSet {
      * 子題集合
      */
     questions?: Question[];
+    /**
+     * 建立時間 (timestemp)
+     */
+    createdAt?: number;
+    /**
+     * 更新時間 (timestemp)
+     */
+    updatedAt?: number;
 }

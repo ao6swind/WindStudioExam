@@ -9,9 +9,10 @@ export class MenuComponent implements OnInit {
 
   isMenuOpen = true;
   menus: { 'title': string, 'url': string }[] = [
-    { title: '題目管理', url: '/questions' },
     { title: '測驗管理', url: '/exams' },
+    { title: '連結管理', url: '/links' },
     { title: '標籤管理', url: '/tags' },
+    { title: '題目管理', url: '/questions' },
   ];
 
   constructor() { }

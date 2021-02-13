@@ -15,7 +15,6 @@ export class IndexComponent implements OnInit {
   addTagHandler: EventEmitter<Tag[]> = new EventEmitter<Tag[]>();
   updateTagHandler: EventEmitter<Tag[]> = new EventEmitter<Tag[]>();
   
-  count: number = 0;
   tags: Tag[] = [];
 
   constructor(
@@ -24,8 +23,12 @@ export class IndexComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tagService.list().subscribe((tags) => {
-      this.tags = tags;
+    this.tagService.list().subscribe((result) => {
+      this.tags = result.map((actions) => { 
+        const data = actions.payload.doc.data();
+        const id = actions.payload.doc.id;
+        return { id, ...data }; 
+      });
     });
 
     this.addTagHandler.subscribe((tags: Tag[]) => {
