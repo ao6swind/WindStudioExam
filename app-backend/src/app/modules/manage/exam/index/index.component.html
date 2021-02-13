@@ -27,7 +27,7 @@
             <ng-container *ngFor="let session of exam.sessions; let j = index">
               <tr>
                 <td *ngIf="j === 0" [attr.rowspan]="exam.sessions.length">
-                  <div><a href="{{ exam.url }}">{{ exam.title }}</a></div>
+                  <div><a href="{{ exam.url }}" target="_blank">{{ exam.title }}</a></div>
                   <div><small>{{ exam.url }}</small></div>
                 </td>
                 <td>{{ session.examDate }}</td>

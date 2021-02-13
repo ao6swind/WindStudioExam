@@ -35,19 +35,19 @@ export class IndexComponent implements OnInit {
   ) { 
     this.addExamHandler.subscribe((isSuccess) => {
       if(isSuccess) {
-        this.alert.show({ level: AlertLevel.Success, message: '新增連結成功'});
+        this.alert.show({ level: AlertLevel.Success, message: '新增測驗成功'});
         this.drawer.hide();
       } else {
-        this.alert.show({ level: AlertLevel.Danger, message: '新增連結失敗'});
+        this.alert.show({ level: AlertLevel.Danger, message: '新增測驗失敗'});
       }
     });
 
     this.updateExamHandler.subscribe((isSuccess) => {
       if(isSuccess) {
-        this.alert.show({ level: AlertLevel.Success, message: '修改連結成功'});
+        this.alert.show({ level: AlertLevel.Success, message: '修改測驗成功'});
         this.drawer.hide();
       } else {
-        this.alert.show({ level: AlertLevel.Danger, message: '修改連結失敗'});
+        this.alert.show({ level: AlertLevel.Danger, message: '修改測驗失敗'});
       }
     });
   }

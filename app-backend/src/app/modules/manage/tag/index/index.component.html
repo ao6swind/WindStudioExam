@@ -22,19 +22,18 @@
         <tbody>
           <ng-container *ngFor="let level1Tag of tags; let i = index">
             <tr>
-              <td>{{ level1Tag.text }}</td>
+              <td>
+                <input class="form-control form-control-sm" 
+                  name="level1Tag[{{i}}]" 
+                  [(ngModel)]="level1Tag.text"
+                  (change)="onTagChanged(i)">
+              </td>
               <td class="text-right">
                 <ul class="list-inline m-0">
                   <li class="list-inline-item">
                     <a class="text-info" (click)="onBtnAddTagClicked(2, level1Tag)">
                       <i class="bi bi-plus"></i>
                       <span class="ml-2">新增子階層</span>
-                    </a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a class="text-success">
-                      <i class="bi bi-pencil"></i>
-                      <span class="ml-2">編輯</span>
                     </a>
                   </li>
                   <li class="list-inline-item">
@@ -49,19 +48,18 @@
             <ng-container *ngIf="level1Tag.tags && level1Tag.tags.length > 0">
               <ng-container *ngFor="let level2Tag of level1Tag.tags; let j = index">
                 <tr>
-                  <td class="pnl-level2">{{ level2Tag.text }}</td>
+                  <td class="pnl-level2">
+                    <input class="form-control form-control-sm" 
+                      name="level2Tag[{{i}}][{{j}}]" 
+                      [(ngModel)]="level2Tag.text"
+                      (change)="onTagChanged(i)">
+                  </td>
                   <td class="text-right">
                     <ul class="list-inline m-0">
                       <li class="list-inline-item">
                         <a class="text-info" (click)="onBtnAddTagClicked(3, level1Tag, level2Tag)">
                           <i class="bi bi-plus"></i>
                           <span class="ml-2">新增子階層</span>
-                        </a>
-                      </li>
-                      <li class="list-inline-item">
-                        <a class="text-success">
-                          <i class="bi bi-pencil"></i>
-                          <span class="ml-2">編輯</span>
                         </a>
                       </li>
                       <li class="list-inline-item">
@@ -76,15 +74,14 @@
                 <ng-container *ngIf="level2Tag.tags && level2Tag.tags.length > 0">
                   <ng-container *ngFor="let level3Tag of level2Tag.tags; let k = index">
                     <tr>
-                      <td class="pnl-level3">{{ level3Tag.text }}</td>
+                      <td class="pnl-level3">
+                        <input class="form-control form-control-sm" 
+                          name="level3Tag[{{i}}][{{j}}][{{k}}]" 
+                          [(ngModel)]="level3Tag.text"
+                          (change)="onTagChanged(i)">
+                      </td>
                       <td class="text-right">
                         <ul class="list-inline m-0">
-                          <li class="list-inline-item">
-                            <a class="text-success">
-                              <i class="bi bi-pencil"></i>
-                              <span class="ml-2">編輯</span>
-                            </a>
-                          </li>
                           <li class="list-inline-item">
                             <a class="text-danger" (click)="onBtnRemoveTagClicked(3, i, j, k)">
                               <i class="bi bi-trash"></i>

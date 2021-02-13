@@ -119,4 +119,10 @@ export class IndexComponent implements OnInit {
       }
     })
   }
+
+  onTagChanged(i: number): void {
+    this.tagService.update(this.tags[i])
+      .then(() => { this.alert.show({ level: AlertLevel.Success, message: '修改標籤成功' }); })
+      .catch((error) => { this.alert.show({ level: AlertLevel.Danger, message: '修改標籤失敗' }) });
+  }
 }

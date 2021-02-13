@@ -29,18 +29,20 @@ export class FormComponent implements OnInit {
   onBtnSaveClicked(): void {
     switch(this.isCreateMode) {
       case true:
-        this.linkService.add(this.link).then((result) => {
-          this.onFormSave.emit(true);
-        }).catch((error) => {
-          this.onFormSave.emit(false);
-        });
+        this.linkService.add(this.link)
+          .then((result) => {
+            this.onFormSave.emit(true);
+          }).catch((error) => {
+            this.onFormSave.emit(false);
+          });
         break;
       case false:
-        this.linkService.update(this.link).then((result) => {
-          this.onFormSave.emit(true);
-        }).catch((error) => {
-          this.onFormSave.emit(false);
-        });
+        this.linkService.update(this.link)
+          .then((result) => {
+            this.onFormSave.emit(true);
+          }).catch((error) => {
+            this.onFormSave.emit(false);
+          });
         break;
     }
   }
