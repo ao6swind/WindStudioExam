@@ -15,7 +15,7 @@ import { PanelModule } from './panel/panel.module';
     ConfirmModule,
     PaginationModule,
     PanelModule,
-    DrawerModule,
+    DrawerModule
   ],
   exports: [
     BreadcrumbModule,

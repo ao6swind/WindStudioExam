@@ -1,0 +1,24 @@
+@import "../../../../scss/variable.scss";
+
+#pnlAlertContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 0px;
+    display: flex;
+    flex-direction: column-reverse;
+    z-index: 9999;
+}
+
+:host ::ng-deep app-alert {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: $break-point) {
+    :host ::ng-deep app-alert {
+        width: 50%;
+    }
+}

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 
+import { AlertLevel } from 'app-backend/src/app/share/enums/alert-level';
+import { AlertService } from './../../../../services/ui/alert.service';
 import { DrawerService } from './../../../../services/ui/drawer.service';
 import { FormComponent } from './../form/form.component';
 import { Tag } from 'lib-model';
@@ -18,8 +20,9 @@ export class IndexComponent implements OnInit {
   tags: Tag[] = [];
 
   constructor(
+    private alert: AlertService,
     private drawer: DrawerService,
-    private tagService: TagService
+    private tagService: TagService,
   ) { }
 
   ngOnInit() {
@@ -32,27 +35,41 @@ export class IndexComponent implements OnInit {
     });
 
     this.addTagHandler.subscribe((tags: Tag[]) => {
+      const errors: { tag: Tag, error: any }[] = [];
       new Promise<void>((resolve) => {
         tags.forEach((tag, i) => {
-          this.tagService.add(tag).then(() => {
-            console.log(`add tag success (${i})`, tag);
-          });
+          this.tagService.add(tag)
+            .catch((error) => {
+              errors.push({ tag, error });
+            });
         });
         resolve()
       }).then(() => {
+        if(errors.length === 0) {
+          this.alert.show({ level: AlertLevel.Success, message: '新增標籤成功' });
+        } else {
+          this.alert.show({ level: AlertLevel.Danger, message: '新增標籤失敗' });
+        }
         this.drawer.hide();
       });
     });
 
     this.updateTagHandler.subscribe((tags: Tag[]) => {
+      const errors: { tag: Tag, error: any }[] = [];
       new Promise<void>((resolve) => {
         tags.forEach((tag, i) => {
-          this.tagService.update(tag).then(() => {
-            console.log(`update tag success (${i})`, tag);
-          });
+          this.tagService.update(tag)
+            .catch((error) => {
+              errors.push({ tag, error });
+            });
         });
         resolve()
       }).then(() => {
+        if(errors.length === 0) {
+          this.alert.show({ level: AlertLevel.Success, message: '更新標籤成功' });
+        } else {
+          this.alert.show({ level: AlertLevel.Danger, message: '更新標籤失敗' });
+        }
         this.drawer.hide();
       });
     });

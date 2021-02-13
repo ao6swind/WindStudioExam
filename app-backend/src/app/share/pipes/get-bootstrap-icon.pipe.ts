@@ -3,27 +3,25 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { LinkIcon } from 'lib-model';
 
 @Pipe({
-  name: 'getLinkIcon'
+  name: 'getBootstrapIcon'
 })
-export class GetLinkIconPipe implements PipeTransform {
-
+export class GetBootstrapIconPipe implements PipeTransform {
   transform(icon: LinkIcon): string {
     let label = '';
     switch(+icon) {
       case LinkIcon.Link:
-        label = '連結';
+        label = 'bi-link';
         break;
       case LinkIcon.Youtube:
-        label = 'Youtube';
+        label = 'bi-youtube';
         break;
       case LinkIcon.PDF:
-        label = 'PDF';
+        label = 'bi-file-text';
         break;
       case LinkIcon.File:
-        label = '檔案';
+        label = 'bi-files';
         break;
     }
     return label;
   }
-
 }

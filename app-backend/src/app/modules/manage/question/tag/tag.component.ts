@@ -17,8 +17,12 @@ export class TagComponent implements OnInit {
   constructor(private tagService: TagService) { }
 
   ngOnInit() {
-    this.tagService.list().subscribe((tags) => {
-      this.tags = tags;
+    this.tagService.list().subscribe((result) => {
+      this.tags = result.map((actions) => { 
+        const data = actions.payload.doc.data();
+        const id = actions.payload.doc.id;
+        return { id, ...data }; 
+      });
     });
   }
 

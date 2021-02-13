@@ -1,0 +1,15 @@
+<app-breadcrumb>
+  <app-breadcrumb-item [url]="'/'">首頁</app-breadcrumb-item>
+  <app-breadcrumb-item>測驗管理</app-breadcrumb-item>
+</app-breadcrumb>
+
+<app-panel-group>
+  <app-panel [width]="200">
+    <a class="btn btn-primary" (click)="onBtnAddExamClicked()">
+      <div><i class="bi bi-plus display-4"></i></div>
+      <div>新增測驗</div>
+    </a>
+  </app-panel>
+  <app-panel [padding]="false">
+  </app-panel>
+</app-panel-group>
