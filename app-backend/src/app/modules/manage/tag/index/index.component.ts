@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 
 import { AlertLevel } from 'app-backend/src/app/share/enums/alert-level';
 import { AlertService } from './../../../../services/ui/alert.service';
+import { ConfirmService } from './../../../../services/ui/confirm.service';
 import { DrawerService } from './../../../../services/ui/drawer.service';
 import { FormComponent } from './../form/form.component';
 import { Tag } from 'lib-model';
@@ -21,6 +22,7 @@ export class IndexComponent implements OnInit {
 
   constructor(
     private alert: AlertService,
+    private confirm: ConfirmService,
     private drawer: DrawerService,
     private tagService: TagService,
   ) { }
@@ -91,18 +93,30 @@ export class IndexComponent implements OnInit {
   }
 
   onBtnRemoveTagClicked(level: number, i: number, j: number = null, k: number = null) {
-    switch(level) {
-      case 1:
-        this.tagService.delete(this.tags[i].id);
-        break;
-      case 2:
-        this.tags[i].tags.splice(j, 1);
-        this.tagService.update(this.tags[i]);
-        break;
-      case 3:
-        this.tags[i].tags[j].tags.splice(k, 1);
-        this.tagService.update(this.tags[i]);
-        break;
-    }
+    this.confirm.show({
+      title: '刪除標籤',
+      message: '此動作將會移除標籤，你確定嗎？',
+      confirmed: () => {
+        switch(level) {
+          case 1:
+            this.tagService.delete(this.tags[i].id)
+              .then(() => { this.alert.show({ level: AlertLevel.Success, message: '刪除標籤成功' }); })
+              .catch((error) => { this.alert.show({ level: AlertLevel.Danger, message: '刪除標籤失敗' }) });
+            break;
+          case 2:
+            this.tags[i].tags.splice(j, 1);
+            this.tagService.update(this.tags[i])
+              .then(() => { this.alert.show({ level: AlertLevel.Success, message: '刪除標籤成功' }); })
+              .catch((error) => { this.alert.show({ level: AlertLevel.Danger, message: '刪除標籤失敗' }) });
+            break;
+          case 3:
+            this.tags[i].tags[j].tags.splice(k, 1);
+            this.tagService.update(this.tags[i])
+              .then(() => { this.alert.show({ level: AlertLevel.Success, message: '刪除標籤成功' }); })
+              .catch((error) => { this.alert.show({ level: AlertLevel.Danger, message: '刪除標籤失敗' }) });
+            break;
+        }
+      }
+    })
   }
 }
