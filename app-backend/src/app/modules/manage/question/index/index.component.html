@@ -19,7 +19,7 @@
             <th class="border-top-0 bg-light text-nowrap">題幹</th>
             <th class="border-top-0 bg-light text-nowrap">介面</th>
             <th class="border-top-0 bg-light text-nowrap">出處</th>
-            <th class="border-top-0 bg-light text-nowrap" colspan="2"></th>
+            <th class="border-top-0 bg-light text-nowrap"></th>
           </tr>
         </thead>
         <tbody>
@@ -33,32 +33,28 @@
                   </ng-container>
                 </td>
                 <td>
-                  <div >{{ question.content | safeHtmlToString }}</div>
-                </td>
-                <td class="text-nowrap">{{ question.type | getQuestionType }}</td>
-                <td class="text-nowrap">
-                  <a [attr.href]="questionSet.url" target="_blank">
-                    {{ questionSet.source }}
-                  </a>
-                </td>
-                <td class="text-nowrap" *ngIf="j === 0" [attr.rowspan]="questionSet.questions.length">
+                  <div>{{ question.content | safeHtmlToString }}</div>
                   <div *ngIf="questionSet.tags.length > 0" class="mt-2">
                     <span class="badge rounded-pill bg-secondary text-white mr-2 p-2" *ngFor="let tag of questionSet.tags">
                       {{ tag }}
                     </span>
                   </div>
-                  <div><small>建立時間：{{ questionSet.createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}</small></div>
-                  <div><small>更新時間：{{ questionSet.updatedAt | date: 'yyyy-MM-dd HH:mm:ss' }}</small></div>
+                </td>
+                <td class="text-nowrap">{{ question.type | getQuestionType }}</td>
+                <td class="text-nowrap">
+                  <a [attr.href]="questionSet.url" target="_blank">{{ questionSet.source }}</a>
+                  <div><small class="text-secondary">建立時間：{{ questionSet.createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}</small></div>
+                  <div><small class="text-secondary">更新時間：{{ questionSet.updatedAt | date: 'yyyy-MM-dd HH:mm:ss' }}</small></div>
                 </td>
                 <td class="text-nowrap text-right" *ngIf="j === 0" [attr.rowspan]="questionSet.questions.length">
-                  <ul class="list-inline m-0">
-                    <li class="list-inline-item">
+                  <ul class="list-unstyled">
+                    <li>
                       <a class="text-success" [routerLink]="['/questions/edit', questionSet.id]">
                         <i class="bi bi-pencil"></i>
                         <span class="ml-2">編輯</span>
                       </a>
                     </li>
-                    <li class="list-inline-item">
+                    <li>
                       <a class="text-danger" (click)="onBtnRemoveQuestionClicked(questionSet.id)">
                         <i class="bi bi-trash"></i>
                         <span class="ml-2">刪除</span>
