@@ -21,23 +21,23 @@ export class ExamService {
   list(config?: { pageSize?: number, responseLast?: any , responseFirst?: any }) {
     if(!config?.pageSize) {
       return this.store.collection<Exam>(this.collection, ref => ref
-        .orderBy('name', 'asc')
+        .orderBy('title', 'asc')
       ).snapshotChanges();
     } else if(!config?.responseLast && !config?.responseFirst) {
       return this.store.collection<Exam>(this.collection, ref => ref
         .limit(config?.pageSize)
-        .orderBy('name', 'asc')
+        .orderBy('title', 'asc')
       ).snapshotChanges();
     } else if (config?.responseLast && !config?.responseFirst) {
       return this.store.collection<Exam>(this.collection, ref => ref
         .limit(config?.pageSize)
-        .orderBy('name', 'asc')
+        .orderBy('title', 'asc')
         .startAfter(config?.responseLast)
       ).snapshotChanges();
     } else {
       return this.store.collection<Exam>(this.collection, ref => ref
         .limit(config?.pageSize)
-        .orderBy('name', 'asc')
+        .orderBy('title', 'asc')
         .endBefore(config?.responseFirst)
       ).snapshotChanges();
     }

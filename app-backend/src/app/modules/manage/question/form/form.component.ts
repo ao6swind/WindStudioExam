@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { QuestionSet, QuestionType } from 'lib-model';
 
+import { AlertLevel } from 'app-backend/src/app/share/enums/alert-level.js';
+import { AlertService } from './../../../../services/ui/alert.service';
 import { ConfirmService } from './../../../../services/ui/confirm.service';
 import { DrawerService } from './../../../../services/ui/drawer.service';
 import { QuestionService } from './../../../../services/api/question.service';
@@ -19,9 +21,8 @@ export class FormComponent implements OnInit {
   isCreateMode = true;
 
   editor = ClassicEditor;
-  config = {
-    
-  };
+
+  config = { };
   
   onTagSelectedHandler: EventEmitter<string> = new EventEmitter<string>();
 
@@ -39,6 +40,7 @@ export class FormComponent implements OnInit {
 
   constructor(
     private questionService: QuestionService, 
+    private alert: AlertService,
     private confirm: ConfirmService,
     private drawer: DrawerService, 
     private route: ActivatedRoute,
@@ -168,14 +170,22 @@ export class FormComponent implements OnInit {
           this.questionSet.createdAt = Date.now();
           this.questionService.add(this.questionSet)
             .then(() => {
+              this.alert.show({ level: AlertLevel.Success, message: '新增題目成功' });
               this.router.navigate(['/questions']);
+            })
+            .catch((error) => {
+              this.alert.show({ level: AlertLevel.Danger, message: '新增題目失敗' });
             });
           break;
         case false:
           this.questionSet.updatedAt = Date.now();
           this.questionService.update(this.questionSet)
             .then(() => {
+              this.alert.show({ level: AlertLevel.Success, message: '更新題目成功' });
               this.router.navigate(['/questions']);
+            })
+            .catch((error) => {
+              this.alert.show({ level: AlertLevel.Danger, message: '更新題目失敗' });
             });
           break;
       }

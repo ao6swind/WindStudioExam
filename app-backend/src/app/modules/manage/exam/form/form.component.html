@@ -1,3 +1,51 @@
-<p>
-  form works!
-</p>
+<form #form="ngForm">
+  <div class="form-group">
+    <label>測驗名稱</label>
+    <input class="form-control" name="title" required [(ngModel)]="exam.title" #title="ngModel">
+  </div>
+
+  <div class="form-group">
+    <label>官方網站</label>
+    <input class="form-control" name="url" type="url" required [(ngModel)]="exam.url" #url="ngModel">
+  </div>
+
+  <div class="form-group">
+    <label>
+      <span class="mr-3">梯次</span>
+      <button class="btn btn-primary btn-sm" (click)="onBtnAddSessionClicked()">
+        <i class="bi bi-plus"></i>
+      </button>
+    </label>
+    <div class="table-responsive" *ngIf="exam.sessions.length > 0">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="bg-light text-nowrap">考試時間</th>
+            <th class="bg-light text-nowrap">報名開始</th>
+            <th class="bg-light text-nowrap">報名結束</th>
+            <th class="bg-light text-nowrap"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let session of exam.sessions; let i = index">
+            <td><input class="form-control form-control-sm" type="date" name="examDate[{{i}}]" [(ngModel)]="session.examDate"></td>
+            <td><input class="form-control form-control-sm" type="date" name="registStart[{{i}}]" [(ngModel)]="session.registStart"></td>
+            <td><input class="form-control form-control-sm" type="date" name="registEnd[{{i}}]" [(ngModel)]="session.registEnd"></td>
+            <td>
+              <button class="btn btn-danger btn-sm" (click)="onBtnRemoveSessionClicked(i)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <button class="btn btn-primary btn-block" (click)="onBtnSaveClicked()" [disabled]="form.invalid">
+      <div><i class="bi bi-save display-4"></i></div>
+      <div>儲存</div>
+    </button>
+  </div>
+</form>

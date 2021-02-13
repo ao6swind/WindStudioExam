@@ -2,17 +2,16 @@
  * 測驗梯次
  */
 export interface Session {
-    id?: string;
     /**
      * 報名開始
      */
-    registStart: string;
+    registStart?: string;
     /**
      * 報名結束
      */
-    registEnd: string;
+    registEnd?: string;
     /**
      * 測驗日期
      */
-    examDate: string;
+    examDate?: string;
 }

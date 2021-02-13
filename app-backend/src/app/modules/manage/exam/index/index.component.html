@@ -11,5 +11,50 @@
     </a>
   </app-panel>
   <app-panel [padding]="false">
+    <div class="table-responsive">
+      <table class="table table-sticky table-hover">
+        <thead>
+          <tr>
+            <th class="border-top-0 bg-light text-nowrap">測驗</th>
+            <th class="border-top-0 bg-light text-nowrap">考試時間</th>
+            <th class="border-top-0 bg-light text-nowrap">報名開始</th>
+            <th class="border-top-0 bg-light text-nowrap">報名結束</th>
+            <th class="border-top-0 bg-light text-nowrap"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let exam of exams; let i = index">
+            <ng-container *ngFor="let session of exam.sessions; let j = index">
+              <tr>
+                <td *ngIf="j === 0" [attr.rowspan]="exam.sessions.length">
+                  <div><a href="{{ exam.url }}">{{ exam.title }}</a></div>
+                  <div><small>{{ exam.url }}</small></div>
+                </td>
+                <td>{{ session.examDate }}</td>
+                <td>{{ session.registStart }}</td>
+                <td>{{ session.registEnd }}</td>
+                <td *ngIf="j === 0" [attr.rowspan]="exam.sessions.length">
+                  <ul class="list-inline m-0">
+                    <li class="list-inline-item">
+                      <a class="text-success" (click)="onBtnUpdateExamClicked(exam)">
+                        <i class="bi bi-pencil"></i>
+                        <span class="ml-2">編輯</span>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="text-danger" (click)="onBtnRemoveExamClicked(exam.id)">
+                        <i class="bi bi-trash"></i>
+                        <span class="ml-2">刪除</span>
+                      </a>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <app-pagination [url]="'/exams'" [total]="count"></app-pagination>
   </app-panel>
 </app-panel-group>

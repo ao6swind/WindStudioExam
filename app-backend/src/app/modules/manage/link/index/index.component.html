@@ -15,20 +15,20 @@
       <table class="table table-sticky table-hover">
         <thead>
           <tr>
-            <th class="border-top-0 bg-light text-nowrap" colspan="2">連結</th>
+            <th class="border-top-0 bg-light text-nowrap">連結</th>
             <th class="border-top-0 bg-light text-nowrap"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let link of links">
-            <td class="text-nowrap text-center">
-              <i class="bi {{ link.icon | getBootstrapIcon }}"></i>
-            </td>
             <td class="text-nowrap">
               <div>
-                <a href="{{ link.url }}" target="_blank">{{ link.title }}</a>
+                <i class="bi {{ link.icon | getBootstrapIcon }}"></i>
+                <a class="ml-2" href="{{ link.url }}" target="_blank">{{ link.title }}</a>
               </div>
-              <div><small class="text-secondary">{{ link.url }}</small></div>
+              <div class="pl-2">
+                <small class="text-secondary ml-3">{{ link.url }}</small>
+              </div>
             </td>
             <td class="text-nowrap text-right">
               <ul class="list-inline m-0">

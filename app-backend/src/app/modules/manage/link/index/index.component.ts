@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
+import { AlertLevel } from 'app-backend/src/app/share/enums/alert-level';
+import { AlertService } from './../../../../services/ui/alert.service';
 import { ConfirmService } from './../../../../services/ui/confirm.service';
 import { DrawerService } from './../../../../services/ui/drawer.service';
 import { FormComponent } from './../form/form.component';
@@ -25,17 +27,28 @@ export class IndexComponent implements OnInit {
   responseFirst: any;
 
   constructor(
-    private drawer: DrawerService, 
+    private alert: AlertService,
     private confirm: ConfirmService,
+    private drawer: DrawerService, 
     private linkService: LinkService,
     private route: ActivatedRoute
   ) { 
-    this.addLinkHandler.subscribe((result) => {
-      this.drawer.hide();
+    this.addLinkHandler.subscribe((isSuccess) => {
+      if(isSuccess) {
+        this.alert.show({ level: AlertLevel.Success, message: '新增連結成功'});
+        this.drawer.hide();
+      } else {
+        this.alert.show({ level: AlertLevel.Danger, message: '新增連結失敗'});
+      }
     });
 
-    this.updateLinkHandler.subscribe((result) => {
-      this.drawer.hide();
+    this.updateLinkHandler.subscribe((isSuccess) => {
+      if(isSuccess) {
+        this.alert.show({ level: AlertLevel.Success, message: '修改連結成功'});
+        this.drawer.hide();
+      } else {
+        this.alert.show({ level: AlertLevel.Danger, message: '修改連結失敗'});
+      }
     });
 
     this.route.params.subscribe((params) => {
@@ -115,10 +128,10 @@ export class IndexComponent implements OnInit {
       confirmed: () => {
         this.linkService.delete(id)
           .then(() => {
-
+            this.alert.show({ level: AlertLevel.Success, message: '刪除連結成功' });
           })
           .catch((error) => {
-
+            this.alert.show({ level: AlertLevel.Danger, message: '刪除連結失敗' });
           });
       }
     })

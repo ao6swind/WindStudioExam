@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
+import { AlertLevel } from 'app-backend/src/app/share/enums/alert-level';
+import { AlertService } from './../../../../services/ui/alert.service';
 import { ConfirmService } from './../../../../services/ui/confirm.service';
 import { QuestionService } from 'app-backend/src/app/services/api/question.service';
 import { QuestionSet } from 'lib-model';
@@ -20,6 +22,7 @@ export class IndexComponent implements OnInit {
   responseFirst: any;
 
   constructor(
+    private alert: AlertService,
     private confirm: ConfirmService,
     private questionService: QuestionService,
     private route: ActivatedRoute
@@ -74,7 +77,13 @@ export class IndexComponent implements OnInit {
       title: '刪除題目',
       message: '此動作將會移除資料庫中的題目，你確定嗎？',
       confirmed: () => {
-        this.questionService.delete(id);
+        this.questionService.delete(id)
+          .then(() => {
+            this.alert.show({ level: AlertLevel.Success, message: '刪除題目成功' })
+          })
+          .catch((error) => {
+            this.alert.show({ level: AlertLevel.Success, message: '刪除題目失敗' })
+          });
       }
     });
   }

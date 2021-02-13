@@ -5,13 +5,9 @@ import { Session } from './session';
 export interface Exam {
     id?: string;
     /**
-     * 年度
-     */
-    year?: number;
-    /**
      * 測驗名稱
      */
-    name?: string;
+    title?: string;
     /**
      * 官方網站
      */
