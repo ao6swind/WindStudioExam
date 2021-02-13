@@ -3,4 +3,12 @@
   <button class="navbar-toggler" (click)="onBtnTogglerClicked()">
     <span class="navbar-toggler-icon"></span>
   </button>
+  <div class="dropdown ml-auto">
+    <span class="text-white btn-profile" data-toggle="dropdown">
+      {{ user }}
+    </span>
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" (click)="onBtnLogoutClicked()">登出</a>
+    </div>
+  </div>
 </header>
