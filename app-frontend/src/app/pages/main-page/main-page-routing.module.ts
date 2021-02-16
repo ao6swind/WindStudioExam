@@ -9,8 +9,12 @@ const routes: Routes = [
     component: MainPagePage,
     children: [
       {
-        path: '',
+        path: 'home',
         loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+      },
+      {
+        path: '',
+        redirectTo: 'home'
       }
     ]
   }

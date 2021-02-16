@@ -1,32 +1,30 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <!--
-    <ion-title>首頁</ion-title>
-    -->
+    <ion-title>程式設計課程學習資源</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
   <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="schedule">
+    <ion-tab-bar slot="bottom" color="primary">
+      <ion-tab-button tab="exam">
+        <ion-icon name="book"></ion-icon>
+        <ion-label>測驗資訊</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="question">
         <ion-icon name="book"></ion-icon>
         <ion-label>逐題測驗</ion-label>
       </ion-tab-button>
   
-      <ion-tab-button tab="speakers">
+      <ion-tab-button tab="filter">
         <ion-icon name="filter"></ion-icon>
-        <ion-label>標籤篩選</ion-label>
+        <ion-label>篩選主題</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button tab="speakers">
-        <ion-icon name="document"></ion-icon>
-        <ion-label>問卷回饋</ion-label>
-      </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
 </ion-content>

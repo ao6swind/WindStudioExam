@@ -1,0 +1,37 @@
+<ion-content>
+  <div class="pnl-news">
+    本網站彙整的考試資訊屬於不定期更新，不保證屬於最新消息，請閱覽者自行前往各項測驗官方網站確認最新測驗時程
+  </div>
+  <div *ngFor="let exam of exams">
+    <div class="pnl-title">
+      <h3>
+        <a href="{{ exam.url }}" target="_blank">
+          <span class="txt-title">{{ exam.title }}</span>
+          <small>
+            <ion-icon name="open-outline"></ion-icon>
+          </small>
+        </a>
+      </h3>
+      <small>{{ exam.url }}</small>
+    </div>
+    <div>
+      <ion-list>
+        <ion-list-header>
+          <ion-label>梯次</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let session of exam.sessions">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label>
+            <ion-grid>
+              <ion-row>
+                <ion-col>考試日期：{{ session.examDate }}</ion-col>
+                <ion-col>報名開始：{{ session.registStart }}</ion-col>
+                <ion-col>報名結束：{{ session.registEnd }}</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

@@ -1,26 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Link } from 'lib-model';
+import { LinkService } from '../../services/link.service';
+import { environment } from '../../../environments/environment';
+
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.page.html',
   styleUrls: ['./main-page.page.scss'],
 })
 export class MainPagePage implements OnInit {
-
+  version = environment.version;
   isDarkMode: boolean = false;
 
-  links = [
-    { title: '台師大進修推廣學院Moodle', url: 'https://moodle.sce.ntnu.edu.tw', icon: 'link-outline' },
-    { title: '高中生解題系統', url: 'https://zerojudge.tw', icon: 'link-outline' },
-    { title: 'APCS官方網站', url: 'https://apcs.csie.ntnu.edu.tw/', icon: 'link-outline' }
-  ]
+  links: Link[] = [];
 
-  constructor() { }
+  constructor(
+    private linkService: LinkService,
+  ) { 
+    this.isDarkMode = localStorage.getItem('darkMode').toUpperCase() === 'TRUE';
+    this.setDarkMode();
+  }
 
   ngOnInit() {
+    this.linkService.list().subscribe((result) => {
+      this.links = result.map((actions) => { 
+        const data = actions.payload.doc.data();
+        const id = actions.payload.doc.id;
+        return { id, ...data }; 
+      });
+    });
   }
 
   onDarkModeChange($event) {
-    document.body.classList.toggle('dark', $event.detail.checked);
+    localStorage.setItem('darkMode', $event.detail.checked);
+    this.setDarkMode();
+  }
+
+  private setDarkMode() {
+    document.body.classList.toggle('dark', this.isDarkMode);
   }
 }

@@ -1,4 +1,5 @@
 export const environment = {
+  version: '1.0.0',
   production: false,
   firebase: {
     apiKey: "SET_YOUR_API_KEY_HERE",
