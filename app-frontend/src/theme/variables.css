@@ -8,7 +8,11 @@
  * Dark Colors
  * -------------------------------------------
  */
-
+html,
+body {
+    min-height: 100%;
+    max-height: 100%;
+}
 body.dark {
     --ion-color-primary: #202020;
     --ion-color-primary-rgb: 32, 32, 32;

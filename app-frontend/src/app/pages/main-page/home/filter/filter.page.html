@@ -61,6 +61,10 @@
     </ng-container>
 
     <ng-container *ngIf="questionSet">
+        <ion-item lines="full">
+            <ion-label>記住進度</ion-label>
+            <ion-toggle [(ngModel)]="isAutoSave" (ionChange)="onAutoSaveChange($event)"></ion-toggle>
+        </ion-item>
         <ion-grid>
             <ion-row>
                 <ion-col size="12">

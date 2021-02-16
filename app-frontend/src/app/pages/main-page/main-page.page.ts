@@ -12,7 +12,6 @@ import { environment } from '../../../environments/environment';
 export class MainPagePage implements OnInit {
   version = environment.version;
   isDarkMode: boolean = false;
-
   links: Link[] = [];
 
   constructor(

@@ -26,11 +26,27 @@ export class QuestionService {
         .endBefore(config?.response)
       ).snapshotChanges();
     } else {
-      return this.store.collection<QuestionSet>(this.collection, ref => ref
-        .limit(1)
-        .orderBy('createdAt', 'desc')
-      ).snapshotChanges();
+      if(config.response) {
+        console.log('in');
+        return this.store.collection<QuestionSet>(this.collection, ref => ref
+          .limit(1)
+          .orderBy('createdAt', 'desc')
+          .startAt(config?.response)
+        ).snapshotChanges();
+      }
+      else {
+        return this.store.collection<QuestionSet>(this.collection, ref => ref
+          .limit(1)
+          .orderBy('createdAt', 'desc')
+        ).snapshotChanges();
+      }
     }
+  }
+
+  count() {
+    return this.store.collection<QuestionSet>(this.collection)
+      .valueChanges()
+      .pipe(map(actions => actions.length));
   }
 
   listWithTopic(config?: { direction?: number, topics?: string[], type?: string, response?: any }) {
