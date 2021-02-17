@@ -3,9 +3,10 @@
 **/environment.prod.ts
 **/environment.dev.ts
 app-backend/src/assets/ckeditor/**
+public
 android
 .gradle
-public
+.firebase
 
 # compiled output
 /dist
