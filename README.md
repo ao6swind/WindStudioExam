@@ -14,6 +14,15 @@
 
 # 編譯指令
 
+-   前台：ionic build --prod
+-   後台：ng build --prod
+-   android:
+    -   ionic build --prod
+    -   npx cap copy
+    -
+
+# 偵錯指令
+
 -   ckeditor
     -   cd ckeditor5
     -   npm run build (無法覆蓋, 重 build 之前要先刪除原本的專案輸出)
@@ -28,6 +37,9 @@
     -   ionic serve -o -c=dev
     -   ionic build
     -   ionic build prod
+-   android
+    -   ionic build --prod
+    -   npx cap open android
 
 # 建置歷程
 
@@ -72,3 +84,9 @@
 ## 其它套件
 
 -   ng add @angular/fire
+
+## ionic capacitor
+
+-   npx cap init
+-   npx cap add android
+-   修改 capacitor.config.json 把 ionic 專案輸出指到正確的位置

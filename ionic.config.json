@@ -2,7 +2,7 @@
   "defaultProject": "app-frontend",
   "projects": {
     "app-frontend": {
-      "name": "My App",
+      "name": "程式設計課程學習資源",
       "integrations": {},
       "type": "angular",
       "root": "app-frontend"

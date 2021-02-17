@@ -17,7 +17,7 @@ export class MainPagePage implements OnInit {
   constructor(
     private linkService: LinkService,
   ) { 
-    this.isDarkMode = localStorage.getItem('darkMode').toUpperCase() === 'TRUE';
+    this.isDarkMode = localStorage.getItem('darkMode')?.toUpperCase() === 'TRUE';
     this.setDarkMode();
   }
 

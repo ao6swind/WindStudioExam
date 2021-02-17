@@ -1,0 +1,13 @@
+{
+  "appId": "com.app.exam",
+  "appName": "wind-studio.exam",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "app-frontend/dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

@@ -49,7 +49,7 @@ export class QuestionService {
   }
 
   listWithTopic(config?: { direction?: number, topics?: string[], type?: string, response?: any }) {
-    const operator = (config?.type.toUpperCase() === 'OR') ? 'array-contains-any' : 'array-contains';
+    const operator = (config?.type?.toUpperCase() === 'OR') ? 'array-contains-any' : 'array-contains';
     if(config?.direction === 1) {
       return this.store.collection<QuestionSet>(this.collection, ref => ref
         .where('tags', operator, config?.topics)
@@ -74,7 +74,7 @@ export class QuestionService {
   }
 
   countWithTopic(config: { topics: string[], type: string }) {
-    const operator = (config?.type.toUpperCase() === 'OR') ? 'array-contains-any' : 'array-contains';
+    const operator = (config?.type?.toUpperCase() === 'OR') ? 'array-contains-any' : 'array-contains';
     return this.store.collection<QuestionSet>(this.collection, ref => ref.where('tags', operator, config.topics))
       .valueChanges()
       .pipe(map(actions => actions.length));

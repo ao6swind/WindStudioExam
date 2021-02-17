@@ -199,7 +199,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/app-frontend",
+            "outputPath": "app-frontend/dist",
             "index": "app-frontend/src/index.html",
             "main": "app-frontend/src/main.ts",
             "polyfills": "app-frontend/src/polyfills.ts",
