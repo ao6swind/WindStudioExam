@@ -1,20 +1,21 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-import { IonicModule } from '@ionic/angular';
-
-import { FilterPageRoutingModule } from './filter-routing.module';
-
 import { FilterPage } from './filter.page';
+import { FilterPageRoutingModule } from './filter-routing.module';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { NgModule } from '@angular/core';
+import { PipesModule } from './../../../../pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FilterPageRoutingModule
+    FilterPageRoutingModule,
+    PipesModule
   ],
-  declarations: [FilterPage]
+  declarations: [
+    FilterPage
+  ]
 })
 export class FilterPageModule {}

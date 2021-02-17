@@ -13,17 +13,20 @@
             </ion-col>
     
             <ion-col size="12" *ngIf="questionSet?.content">
-                <div [innerHtml]="questionSet?.content | getContentView"></div>
+                <div class="pnl-source" [innerHtml]="questionSet?.content | getContentView"></div>
             </ion-col>
     
             <ion-col size="12" *ngFor="let question of questionSet?.questions; let i = index">
                 <ion-list>
-                    <ion-item [innerHtml]="question.content | getContentView"></ion-item>
+                    <div class="pnl-source" [innerHtml]="question.content | getContentView"></div>
+                    
                     <ng-container [ngSwitch]="question.type">
                         <ion-radio-group *ngSwitchCase="2">
                             <ion-item *ngFor="let option of question.options">
                                 <ion-radio slot="start" value="{{ option.content }}"></ion-radio>
-                                <ion-label>{{ option.content }}</ion-label>
+                                <ion-label>
+                                    <div [innerHtml]="option.content | getContentView"></div>
+                                </ion-label>
                                 <ion-icon slot="end" *ngIf="isShowAnswer[i]"
                                     name="{{ option.isAnswer ? 'checkmark' : 'close' }}"></ion-icon>
                             </ion-item>
@@ -32,19 +35,21 @@
                         <ion-list *ngSwitchCase="3">
                             <ion-item *ngFor="let option of question.options">
                                 <ion-checkbox slot="start"></ion-checkbox>
-                                <ion-label>{{ option.content }}</ion-label>
+                                <ion-label>
+                                    <div [innerHtml]="option.content | getContentView"></div>
+                                </ion-label>
                                 <ion-icon slot="end" *ngIf="isShowAnswer[i]"
                                     name="{{ option.isAnswer ? 'checkmark' : 'close' }}"></ion-icon>
                             </ion-item>
                         </ion-list>
                     </ng-container>
     
-                    <ion-item *ngIf="isShowAnswer[i] && question.comment" [innerHtml]="question.comment"></ion-item>
-    
                     <ion-item>
                         <ion-label>顯示答案</ion-label>
                         <ion-toggle [(ngModel)]="isShowAnswer[i]"></ion-toggle>
                     </ion-item>
+
+                    <div class="pnl-source" *ngIf="isShowAnswer[i] && question.comment" [innerHtml]="question.comment | getContentView"></div>
                 </ion-list>
             </ion-col>
     

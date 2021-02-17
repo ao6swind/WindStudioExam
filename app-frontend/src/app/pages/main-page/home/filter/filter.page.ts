@@ -16,7 +16,7 @@ export class FilterPage implements OnInit {
   response: any = null;
   tags: Tag[] = [];
   topics: string[] = [];
-  type: string = 'AND';
+  type: string = 'OR';
   questionSet: QuestionSet = null;
   total = 0;
   current = 1;

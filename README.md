@@ -1,3 +1,5 @@
+[https://windstudio-exam.web.app/study]("https://windstudio-exam.web.app/study")
+
 # 專案結構
 
 -   app-backend: 上架用的後台（angular, bootstrap 4）
@@ -90,3 +92,7 @@
 -   npx cap init
 -   npx cap add android
 -   修改 capacitor.config.json 把 ionic 專案輸出指到正確的位置
+
+## firebase deploy
+
+-   firebase deploy
