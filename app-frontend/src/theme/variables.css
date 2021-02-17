@@ -16,6 +16,9 @@ body {
 .MathJax {
     font-size: 1rem;
 }
+pre {
+    tab-size: 2rem;
+}
 body.dark {
     --ion-color-primary: #202020;
     --ion-color-primary-rgb: 32, 32, 32;
