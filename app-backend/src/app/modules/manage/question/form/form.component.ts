@@ -6,9 +6,11 @@ import { QuestionSet, QuestionType } from 'lib-model';
 
 import { AlertLevel } from 'app-backend/src/app/share/enums/alert-level.js';
 import { AlertService } from './../../../../services/ui/alert.service';
+import { CkeditorUploadAdapter } from './../../../../share/utilities/ckeditor-upload-adaptor';
 import { ConfirmService } from './../../../../services/ui/confirm.service';
 import { DrawerService } from './../../../../services/ui/drawer.service';
 import { QuestionService } from './../../../../services/api/question.service';
+import { ResourceComponent } from './../resource/resource.component';
 import { TagComponent } from './../tag/tag.component';
 
 declare const $: any;
@@ -21,8 +23,6 @@ export class FormComponent implements OnInit {
   isCreateMode = true;
 
   editor = ClassicEditor;
-
-  config = { };
   
   onTagSelectedHandler: EventEmitter<string> = new EventEmitter<string>();
 
@@ -33,6 +33,7 @@ export class FormComponent implements OnInit {
     url: null,
     content: null,
     tags: [ ],
+    folder: Date.now().toString(),
     questions: [ ],
     createdAt: null,
     updatedAt: null,
@@ -44,7 +45,7 @@ export class FormComponent implements OnInit {
     private confirm: ConfirmService,
     private drawer: DrawerService, 
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) { 
     this.onTagSelectedHandler.subscribe((tag) => {
       if(this.questionSet.tags.indexOf(tag) < 0) {
@@ -63,7 +64,32 @@ export class FormComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
+  /**
+   * 新增子題
+   */
+  onBtnAddQuestionClicked(): void {
+    this.questionSet.questions.push({
+      content: null,
+      type: null,
+      options: [],
+      comment: null
+    })
+  }
+
+  /**
+   * 顯示已上傳的資源檔案
+   */
+  onBtnListResourceClicked(): void {
+    this.drawer.show({
+      title: '管理資源',
+      component: ResourceComponent,
+      data: [
+        { key: 'folder', value: this.questionSet.folder }
+      ]
+    });
+  }
 
   /**
    * 新增標籤
@@ -87,17 +113,7 @@ export class FormComponent implements OnInit {
     this.questionSet.tags.splice(index, 1);
   }
 
-  /**
-   * 新增子題
-   */
-  onBtnAddQuestionClicked(): void {
-    this.questionSet.questions.push({
-      content: null,
-      type: null,
-      options: [],
-      comment: null
-    })
-  }
+
 
   /**
    * 移除子題
@@ -196,5 +212,11 @@ export class FormComponent implements OnInit {
         hasCancel: false
       });
     }
+  }
+
+  onEditorReady($event) {
+    $event.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      return new CkeditorUploadAdapter(loader, this.questionSet.folder);
+    };
   }
 }

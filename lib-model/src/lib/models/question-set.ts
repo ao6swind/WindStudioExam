@@ -17,6 +17,10 @@ export interface QuestionSet {
      */
     tags?: string[];
     /**
+     * 資料夾時戳
+     */
+    folder?: string;
+    /**
      * 題組前文
      */
     content?: string;

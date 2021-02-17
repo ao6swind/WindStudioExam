@@ -6,6 +6,7 @@ import { IndexComponent } from './index/index.component';
 import { NgModule } from '@angular/core';
 import { QuestionComponent } from './question.component';
 import { QuestionRoutingModule } from './question-routing.module';
+import { ResourceComponent } from './resource/resource.component';
 import { ShareModule } from 'app-backend/src/app/share/share.module';
 import { TagComponent } from './tag/tag.component';
 
@@ -14,7 +15,8 @@ import { TagComponent } from './tag/tag.component';
     QuestionComponent,
     FormComponent,
     IndexComponent,
-    TagComponent
+    TagComponent,
+    ResourceComponent
   ],
   imports: [
     CommonModule,

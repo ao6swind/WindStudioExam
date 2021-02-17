@@ -1,0 +1,47 @@
+<div class="pnl-list"> 
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="bg-light text-nowrap">檔名</th>
+          <th class="bg-light text-nowrap">類型</th>
+          <th class="bg-light text-nowrap"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let resource of resources">
+          <td>
+            <a (click)="onBtnPreviewClicked(resource)">{{ resource.name }}</a>
+          </td>
+          <td>{{ resource.type }}</td>
+          <td>
+            <a class="text-danger" (click)="onBtnRemoveResourceClicked(resource.name)">
+              <i class="bi bi-trash"></i>
+              <span class="ml-2">刪除</span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="pnl-preview mt-3" *ngIf="preview">
+  <ng-container [ngSwitch]="getResourceType()">
+    <ng-container *ngSwitchCase="'image'">
+      <img class="img-fluid" src="{{ preview.url }}">
+    </ng-container>
+    <ng-container *ngSwitchCase="'video'">
+      <video controls>
+        <source src="{{ preview.url }}" type="{{ preview.type }}">
+      </video>
+    </ng-container>
+    <ng-container *ngSwitchCase="'audio'">
+      <audio controls>
+        <source src="{{ preview.url }}" type="{{ preview.type }}">
+      </audio>
+    </ng-container>
+    <ng-container *ngSwichDefault>
+      <span>不支援預覽</span>
+    </ng-container>
+  </ng-container>
+</div>

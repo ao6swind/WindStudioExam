@@ -23,6 +23,12 @@
         </button>
       </div>
       <div class="col-6 col-md-12 mb-md-3">
+        <button class="btn btn-primary btn-block" (click)="onBtnListResourceClicked()">
+          <div><i class="bi bi-cloud display-4"></i></div>
+          <div>管理資源</div>
+        </button>
+      </div>
+      <div class="col-6 col-md-12 mb-md-3">
         <button class="btn btn-primary btn-block" (click)="onBtnSaveClicked()">
           <div><i class="bi bi-save display-4"></i></div>
           <div>儲存</div>
@@ -93,7 +99,7 @@
 
         <div class="form-group">
           <label>題組前文</label>
-          <ckeditor [(ngModel)]="questionSet.content" [editor]="editor" [config]="config"></ckeditor>
+          <ckeditor [(ngModel)]="questionSet.content" [editor]="editor" (ready)="onEditorReady($event)"></ckeditor>
         </div>
       </div>
 
@@ -125,7 +131,7 @@
 
           <div class="form-group">
             <label>題幹</label>
-            <ckeditor [(ngModel)]="question.content" [editor]="editor"></ckeditor>
+            <ckeditor [(ngModel)]="question.content" [editor]="editor" (ready)="onEditorReady($event)"></ckeditor>
           </div>
 
           <!-- 選項 -->

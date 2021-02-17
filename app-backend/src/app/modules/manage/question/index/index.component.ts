@@ -1,3 +1,5 @@
+import 'firebase/storage';
+
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
@@ -6,6 +8,7 @@ import { AlertService } from './../../../../services/ui/alert.service';
 import { ConfirmService } from './../../../../services/ui/confirm.service';
 import { QuestionService } from 'app-backend/src/app/services/api/question.service';
 import { QuestionSet } from 'lib-model';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-index',
@@ -72,13 +75,18 @@ export class IndexComponent implements OnInit {
     
   }
 
-  onBtnRemoveQuestionClicked(id: string): void {
+  onBtnRemoveQuestionClicked(questionSet: QuestionSet): void {
     this.confirm.show({
       title: '刪除題目',
       message: '此動作將會移除資料庫中的題目，你確定嗎？',
       confirmed: () => {
-        this.questionService.delete(id)
+        this.questionService.delete(questionSet.id)
           .then(() => {
+            firebase.storage().ref(questionSet.folder).listAll().then((folder) => {
+              folder.items.forEach((file) => {
+                file.delete();
+              });
+            });
             this.alert.show({ level: AlertLevel.Success, message: '刪除題目成功' })
           })
           .catch((error) => {
