@@ -3,7 +3,7 @@
   "appName": "wind-studio.exam",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "app-frontend/dist",
+  "webDir": "docs",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0

@@ -82,7 +82,7 @@ export class IndexComponent implements OnInit {
       confirmed: () => {
         this.questionService.delete(questionSet.id)
           .then(() => {
-            firebase.storage().ref(questionSet.folder).listAll().then((folder) => {
+            firebase.storage().ref(`question/${questionSet.folder}`).listAll().then((folder) => {
               folder.items.forEach((file) => {
                 file.delete();
               });

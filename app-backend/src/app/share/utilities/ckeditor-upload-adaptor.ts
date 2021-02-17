@@ -10,7 +10,7 @@ export class CkeditorUploadAdapter {
     return this.loader.file.then(
       file =>
         new Promise((resolve, reject) => {
-          const storage = firebase.storage().ref(this.folder);
+          const storage = firebase.storage().ref(`question/${this.folder}`);
           const extension = file.name.split('.')[1];
           const uploadTask = storage.child(`${Date.now().toString()}.${extension}`).put(file);
           uploadTask.on(

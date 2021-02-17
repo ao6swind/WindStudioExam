@@ -27,7 +27,7 @@ export class ResourceComponent implements OnInit {
   }
 
   ngOnInit() {
-    firebase.storage().ref(this.folder).listAll().then((folder) => {
+    firebase.storage().ref(`question/${this.folder}`).listAll().then((folder) => {
       folder.items.forEach((file) => {
         forkJoin([
           file.getMetadata(),
@@ -48,7 +48,7 @@ export class ResourceComponent implements OnInit {
       title: '刪除資源',
       message: '移除這個資源可能會導致題目內使用到的資源參考失效，你確定嗎？',
       confirmed: () => {
-        firebase.storage().ref(this.folder).child(filename)
+        firebase.storage().ref(`question/${this.folder}`).child(filename)
           .delete()
           .then((result) => {
             const index = this.resources.findIndex((resource) => { resource.name === filename });
