@@ -18,7 +18,7 @@
     
             <ion-col size="12" *ngFor="let question of questionSet?.questions; let i = index">
                 <ion-list>
-                    <ion-item [innerHtml]="question.content"></ion-item>
+                    <ion-item [innerHtml]="question.content | getContentView"></ion-item>
                     <ng-container [ngSwitch]="question.type">
                         <ion-radio-group *ngSwitchCase="2">
                             <ion-item *ngFor="let option of question.options">

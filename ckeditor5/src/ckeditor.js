@@ -5,7 +5,7 @@ import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
 import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder.js';
 import CKFinderUploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter.js';
-import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js';
+import ClassicEditorBase from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock.js';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js';
 import ExportToPDF from '@ckeditor/ckeditor5-export-pdf/src/exportpdf.js';
@@ -19,6 +19,7 @@ import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle.js';
 import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar.js';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload.js';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent.js';
+import InlineEditorBase from '@ckeditor/ckeditor5-editor-inline/src/inlineeditor';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
 import Link from '@ckeditor/ckeditor5-link/src/link.js';
 import LinkImage from '@ckeditor/ckeditor5-link/src/linkimage.js';
@@ -42,17 +43,16 @@ import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
-class Editor extends ClassicEditor {}
 
-// Plugins to include in the build.
-Editor.builtinPlugins = [
+class ClassicEditor extends ClassicEditorBase {}
+class InlineEditor extends InlineEditorBase {}
+
+ClassicEditor.builtinPlugins = [
 	Alignment,
 	AutoImage,
 	Autoformat,
 	BlockQuote,
 	Bold,
-	CKFinder,
-	CKFinderUploadAdapter,
 	CodeBlock,
 	Essentials,
 	ExportToPDF,
@@ -92,7 +92,41 @@ Editor.builtinPlugins = [
 	Underline
 ];
 
-Editor.defaultConfig = {
+InlineEditor.builtinPlugins = [
+	AutoImage,
+	Autoformat,
+	BlockQuote,
+	Bold,
+	CodeBlock,
+	Essentials,
+	FontBackgroundColor,
+	FontColor,
+	Image,
+	ImageCaption,
+	ImageStyle,
+	ImageToolbar,
+	ImageUpload,
+	Indent,
+	Italic,
+	List,
+	ListStyle,
+	MathType,
+	MediaEmbed,
+	MediaEmbedToolbar,
+	PasteFromOffice,
+	RemoveFormat,
+	RemoveFormatLinks,
+	SpecialCharacters,
+	SpecialCharactersCurrency,
+	SpecialCharactersMathematical,
+	Strikethrough,
+	Subscript,
+	Superscript,
+	TextTransformation,
+	Underline
+]
+
+ClassicEditor.defaultConfig = {
 	alignment: {
 		options: [ 'left', 'center', 'right', 'justify' ]
 	},
@@ -149,9 +183,33 @@ Editor.defaultConfig = {
 	},
 	language: 'zh'
 };
+
+InlineEditor.defaultConfig = {
+	toolbar: {
+		items: [
+			'bold',
+			'italic',
+			'underline', 
+			'strikethrough', 
+			'subscript', 
+			'superscript',
+			'fontColor', 
+			'fontBackgroundColor',
+			'specialCharacters',
+			'codeBlock',
+			'MathType',
+			'ChemType',
+			'imageUpload',
+			'mediaEmbed'
+		]
+	},
+};
+
 export function RemoveFormatLinks( editor ) {
     editor.model.schema.setAttributeProperties( 'linkHref', {
         isFormatting: true
     });
 }
-export default Editor;
+export default {
+    ClassicEditor, InlineEditor
+};

@@ -13,20 +13,13 @@ export class GetQuestionTypePipe implements PipeTransform {
       case QuestionType.Thesis:
         label = '申論題';
         break;
-      case QuestionType.SingleChoiceText:
-        label = '文字單選題';
+      case QuestionType.SingleChoice:
+        label = '單選題';
         break;
-      case QuestionType.MultipleChoiceText:
-        label = '文字複選題';
-        break;
-      case QuestionType.SingleChoiceImage:
-        label = '圖片單選題';
-        break;
-      case QuestionType.MultipleChoiceImage:
-        label = '圖片複選題';
+      case QuestionType.MultipleChoice:
+        label = '複選題';
         break;
     }
     return label;
   }
-
 }

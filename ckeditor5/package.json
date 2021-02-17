@@ -12,6 +12,7 @@
     "@ckeditor/ckeditor5-dev-utils": "^24.0.2",
     "@ckeditor/ckeditor5-dev-webpack-plugin": "^24.0.2",
     "@ckeditor/ckeditor5-editor-classic": "^25.0.0",
+    "@ckeditor/ckeditor5-editor-inline": "^25.0.0",
     "@ckeditor/ckeditor5-essentials": "^25.0.0",
     "@ckeditor/ckeditor5-export-pdf": "^25.0.0",
     "@ckeditor/ckeditor5-export-word": "^25.0.0",

@@ -13,7 +13,7 @@ module.exports = {
 	entry: path.resolve( __dirname, 'src', 'ckeditor.js' ),
 
 	output: {
-		library: 'ClassicEditor',
+		library: 'CKEDITOR',
 		path: path.resolve( __dirname, '../app-backend/src/assets/ckeditor' ),
 		filename: 'ckeditor.js',
 		libraryTarget: 'umd',

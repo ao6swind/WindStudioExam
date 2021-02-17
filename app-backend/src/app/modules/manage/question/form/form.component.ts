@@ -1,4 +1,4 @@
-import * as ClassicEditor from './../../../../../assets/ckeditor/ckeditor.js';
+import * as CKEDITOR from './../../../../../assets/ckeditor/ckeditor.js';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, EventEmitter, OnInit } from '@angular/core';
@@ -22,8 +22,9 @@ declare const $: any;
 export class FormComponent implements OnInit {
   isCreateMode = true;
 
-  editor = ClassicEditor;
-  
+  classicEditor = CKEDITOR.ClassicEditor;
+  inlineEditor = CKEDITOR.InlineEditor;
+
   onTagSelectedHandler: EventEmitter<string> = new EventEmitter<string>();
 
   questionTypeEnum = QuestionType;
@@ -155,7 +156,7 @@ export class FormComponent implements OnInit {
    * @param i 子題索引
    * @param j 選項索引
    */
-  onBtnRemoveOptionClicked(i: number, j: number): void {
+  onBtnRemoveOptionClicked(i, j): void {
     this.confirm.show({
       title: `移除第${i+1}題的選項${j+1}`,
       message: `此動作將會移除第${i+1}題的選項${j+1}，你確定嗎？`,
@@ -170,7 +171,7 @@ export class FormComponent implements OnInit {
    * @param i 子題索引
    * @param j 選項索引
    */
-  onOptionIsAnswerClicked(i: number, j: number): void {
+  onOptionIsAnswerClicked(i, j): void {
     this.questionSet.questions[i].options.forEach((option, index) => {
       option.isAnswer = j == index;
     });
