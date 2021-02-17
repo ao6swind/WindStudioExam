@@ -27,7 +27,6 @@ export class QuestionService {
       ).snapshotChanges();
     } else {
       if(config.response) {
-        console.log('in');
         return this.store.collection<QuestionSet>(this.collection, ref => ref
           .limit(1)
           .orderBy('createdAt', 'desc')

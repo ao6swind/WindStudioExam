@@ -1,12 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { GetContentViewPipe } from './../../../../pipes/get-content-view.pipe';
 import { IonicModule } from '@ionic/angular';
-
-import { QuestionPageRoutingModule } from './question-routing.module';
-
+import { NgModule } from '@angular/core';
 import { QuestionPage } from './question.page';
+import { QuestionPageRoutingModule } from './question-routing.module';
 
 @NgModule({
   imports: [
@@ -15,6 +13,9 @@ import { QuestionPage } from './question.page';
     IonicModule,
     QuestionPageRoutingModule
   ],
-  declarations: [QuestionPage]
+  declarations: [
+    QuestionPage,
+    GetContentViewPipe
+  ]
 })
 export class QuestionPageModule {}

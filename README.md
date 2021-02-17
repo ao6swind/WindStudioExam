@@ -16,7 +16,7 @@
 
 -   ckeditor
     -   cd ckeditor5
-    -   npm run build
+    -   npm run build (無法覆蓋, 重 build 之前要先刪除原本的專案輸出)
 -   app-backend
     -   ng serve -o
     -   ng serve -o -c=dev
