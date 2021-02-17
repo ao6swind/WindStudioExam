@@ -5,6 +5,7 @@
 app-backend/src/assets/ckeditor/**
 android
 .gradle
+public
 
 # compiled output
 /dist
