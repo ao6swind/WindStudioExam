@@ -20,28 +20,27 @@ export class QuestionService {
     if(config.direction === 1) {
       return this.store.collection<QuestionSet>(this.collection, ref => ref
         .limit(1)
-        .orderBy('createdAt', 'desc')
+        .orderBy('createdAt', 'asc')
         .startAfter(config?.response)
       ).snapshotChanges();
     } else if (config.direction === -1) {
       return this.store.collection<QuestionSet>(this.collection, ref => ref
         .limit(1)
-        .orderBy('createdAt', 'desc')
+        .orderBy('createdAt', 'asc')
         .endBefore(config?.response)
       ).snapshotChanges();
     } else {
       if(config.response) {
-        console.log('從上次記錄點出發', config.response);
         return this.store.collection<QuestionSet>(this.collection, ref => ref
           .limit(1)
-          .orderBy('createdAt', 'desc')
+          .orderBy('createdAt', 'asc')
           .startAt(config?.response)
         ).snapshotChanges();
       }
       else {
         return this.store.collection<QuestionSet>(this.collection, ref => ref
           .limit(1)
-          .orderBy('createdAt', 'desc')
+          .orderBy('createdAt', 'asc')
         ).snapshotChanges();
       }
     }
@@ -59,21 +58,21 @@ export class QuestionService {
       return this.store.collection<QuestionSet>(this.collection, ref => ref
         .where('tags', operator, config?.topics)
         .limit(1)
-        .orderBy('createdAt', 'desc')
+        .orderBy('createdAt', 'asc')
         .startAfter(config?.response)
       ).snapshotChanges();
     } else if (config?.direction === -1) {
       return this.store.collection<QuestionSet>(this.collection, ref => ref
         .where('tags', operator, config?.topics)
         .limit(1)
-        .orderBy('createdAt', 'desc')
+        .orderBy('createdAt', 'asc')
         .endBefore(config?.response)
       ).snapshotChanges();
     } else {
       return this.store.collection<QuestionSet>(this.collection, ref => ref
         .where('tags', operator, config?.topics)
         .limit(1)
-        .orderBy('createdAt', 'desc')
+        .orderBy('createdAt', 'asc')
       ).snapshotChanges();
     }
   }
