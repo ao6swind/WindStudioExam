@@ -21,7 +21,6 @@
 -   android:
     -   ionic build --prod
     -   npx cap copy
-    -
 
 # 偵錯指令
 
@@ -41,11 +40,12 @@
     -   ionic build prod
 -   android
     -   ionic build --prod
+    -   npx cap copy
     -   npx cap open android
 
 # 建置歷程
 
-## 下指令
+## 指令
 
 -   ng new WindStudioExam --create-application=false --style=scss
 -   cd WindStudioExam
@@ -95,4 +95,7 @@
 
 ## firebase deploy
 
+-   ng build --prod
+-   ionic build --prod
+-   到 public 底下把 index.html 中的 base href 換成子目錄
 -   firebase deploy
