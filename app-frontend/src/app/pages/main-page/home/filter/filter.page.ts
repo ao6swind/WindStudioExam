@@ -25,8 +25,8 @@ export class FilterPage implements OnInit {
   constructor(
     private tagService: TagService,
     private questionService: QuestionService,
-    public toastController: ToastController,
-    public actionSheetController: ActionSheetController
+    private toastController: ToastController,
+    private actionSheetController: ActionSheetController
   ) { 
     // 先把狀態取出來 
     this.isAutoSave = localStorage.getItem('filterIsAutoSave')?.toUpperCase() === 'TRUE';

@@ -19,7 +19,47 @@
       </div>
     </div>
   </app-panel>
+  
   <app-panel>
-    
+    <div class="card mb-3" *ngIf="config">
+      <div class="card-body">
+        <h5 class="card-title">安裝檔</h5>
+
+        <div class="form-group">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="enableDownload" [(ngModel)]="config.enableDownload">
+            <label class="custom-control-label" for="enableDownload">開放下載</label>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Android</span>
+          </div>
+          <input class="form-control" type="file" name="android" accept=".apk" (change)="onFileAndroidChange($event)">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">版本</span>
+          </div>
+          <input class="form-control" name="version" required [(ngModel)]="config.version" #version="ngModel">
+        </div>
+
+        <button class="btn btn-primary btn-block" (click)="onBtnSaveConfig()">
+          <div><i class="bi bi-save display-4"></i></div>
+          <div>儲存</div>
+        </button>
+      </div>
+    </div>
+  </app-panel>
+
+  <app-panel>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Android</h5>
+        <img class="img-fluid" src="assets/img/android.png">
+      </div>
+    </div>
   </app-panel>
 </app-panel-group>

@@ -1,6 +1,6 @@
 {
-  "appId": "com.app.exam",
-  "appName": "wind-studio.exam",
+  "appId": "com.exam.wind",
+  "appName": "程式設計課程學習資源",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "public/study",
