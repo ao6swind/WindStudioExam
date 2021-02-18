@@ -19,9 +19,9 @@ export class ReadTutorialGuard implements CanLoad {
     const isReadTutorial = localStorage.getItem('isReadTutorial') === 'true';
     
     if(!isReadTutorial) {
-      this.router.navigate[('/tutorial')];
+      this.router.navigate(['/tutorial']);
+    } else {
+      return isReadTutorial;
     }
-
-    return isReadTutorial;
   }
 }
