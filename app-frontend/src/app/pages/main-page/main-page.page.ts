@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Link } from 'lib-model';
 import { LinkService } from '../../services/link.service';
+import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -16,6 +17,7 @@ export class MainPagePage implements OnInit {
 
   constructor(
     private linkService: LinkService,
+    private router: Router
   ) { 
     this.isDarkMode = localStorage.getItem('darkMode')?.toUpperCase() === 'TRUE';
     this.setDarkMode();
@@ -34,6 +36,10 @@ export class MainPagePage implements OnInit {
   onDarkModeChange($event) {
     localStorage.setItem('darkMode', $event.detail.checked);
     this.setDarkMode();
+  }
+
+  onBtnReadTutorialClied() {
+    this.router.navigate(['/tutorial']);
   }
 
   private setDarkMode() {

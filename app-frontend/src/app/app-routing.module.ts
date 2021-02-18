@@ -1,6 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 
 import { NgModule } from '@angular/core';
+import { ReadTutorialGuard } from './guards/read-tutorial.guard';
 
 const routes: Routes = [
   {
@@ -10,7 +11,9 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./pages/main-page/main-page.module').then( m => m.MainPagePageModule)
+    loadChildren: () => import('./pages/main-page/main-page.module')
+      .then( m => m.MainPagePageModule),
+    canLoad: [ ReadTutorialGuard ]
   }
 ];
 

@@ -23,8 +23,8 @@ export class QuestionPage implements OnInit {
     public toastController: ToastController
   ) {
     // 先把狀態取出來 
-    this.isAutoSave = localStorage.getItem('isAutoSaveQuestion')?.toUpperCase() === 'TRUE';
-    if(!(this.current = +localStorage.getItem('currentQuestion'))) {
+    this.isAutoSave = localStorage.getItem('questionIsAutoSave')?.toUpperCase() === 'TRUE';
+    if(!(this.current = +localStorage.getItem('questionCurrent'))) {
       this.current = 1;
     }
 
@@ -42,9 +42,9 @@ export class QuestionPage implements OnInit {
    * @param $event 
    */
   onAutoSaveChange($event) {
-    localStorage.setItem('isAutoSaveQuestion', $event.detail.checked);
-    localStorage.setItem('lastAutiSaveQuestionDoc', ($event.detail.checked) ? this.questionSet?.id : null);
-    localStorage.setItem('currentQuestion', this.current.toString());
+    localStorage.setItem('questionIsAutoSave', $event.detail.checked);
+    localStorage.setItem('questionLastDoc', ($event.detail.checked) ? this.questionSet?.id : null);
+    localStorage.setItem('questionCurrent', this.current.toString());
   }
 
   /**
@@ -68,10 +68,10 @@ export class QuestionPage implements OnInit {
   private query(direction: number) {
     // 設置當前頁碼
     this.current += direction;
-    localStorage.setItem('currentQuestion', this.current.toString());
+    localStorage.setItem('questionCurrent', this.current.toString());
 
     if(this.isAutoSave && direction === 0) {
-      this.questionService.get(localStorage.getItem('lastAutiSaveQuestionDoc'))
+      this.questionService.get(localStorage.getItem('questionLastDoc'))
         .subscribe((result) => {
           this.response = result.payload;
           const data = result.payload.data();
@@ -91,7 +91,7 @@ export class QuestionPage implements OnInit {
         })[0];
 
         // 把查到的東西存到localStorage
-        localStorage.setItem('lastAutiSaveQuestionDoc', (this.isAutoSave) ? this.questionSet.id : null);
+        localStorage.setItem('questionLastDoc', (this.isAutoSave) ? this.questionSet.id : null);
 
         // 初始化是否顯示答案的boolean陣列
         this.isShowAnswer = [];

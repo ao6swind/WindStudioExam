@@ -1,16 +1,40 @@
 <ion-content>
   <ion-slides pager="true">
     <ion-slide>
-      這裡準備放一些說明內容
+      <div class="pnl-tutorial">
+        <h3 class="txt-title">深夜模式</h3>
+        <img src="assets/img/tutorial-1.jpg">
+        <p>在主選單可以切換深夜模式</p>
+      </div>
     </ion-slide>
     <ion-slide>
-      這裡準備放一些注意事項
+      <div class="pnl-tutorial">
+        <h3 class="txt-title">顯示答案</h3>
+        <img src="assets/img/tutorial-2.jpg">
+        <p>每一題的下方都有顯示答案的開關，開啟時會顯示正確的選項與題目註解</p>
+      </div>
     </ion-slide>
     <ion-slide>
-      <div>
-        <p>準備好後</p>
-        <ion-button fill="clear" [routerLink]="['/']">
-          <span>進入系統</span>
+      <div class="pnl-tutorial">
+        <h3 class="txt-title">篩選主題</h3>
+        <img src="assets/img/tutorial-3.jpg">
+        <p>當題庫越來越多時，可以透過篩選主題的方式找到感興趣的內容</p>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div class="pnl-tutorial">
+        <h3 class="txt-title">記住進度</h3>
+        <img src="assets/img/tutorial-4.jpg">
+        <p>想休息時，可以記住當前進度，下一次再從這裡繼續出發</p>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div class="pnl-tutorial">
+        <div class="pnl-img-start">
+          <img src="assets/img/start.svg">
+        </div>
+        <ion-button fill="clear" (click)="onBtnStartClicked()">
+          <span>開始學習</span>
           <ion-icon name="arrow-forward-outline"></ion-icon>
         </ion-button>
       </div>

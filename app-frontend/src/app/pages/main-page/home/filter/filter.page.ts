@@ -29,12 +29,12 @@ export class FilterPage implements OnInit {
     public actionSheetController: ActionSheetController
   ) { 
     // 先把狀態取出來 
-    this.isAutoSave = localStorage.getItem('isAutoSaveFilter')?.toUpperCase() === 'TRUE';
+    this.isAutoSave = localStorage.getItem('filterIsAutoSave')?.toUpperCase() === 'TRUE';
     if(this.isAutoSave) {
-      if(!(this.current = +localStorage.getItem('currentFilter'))) {
+      if(!(this.current = +localStorage.getItem('filterCurrent'))) {
         this.current = 1;
       }
-      if(!(this.topics = JSON.parse(localStorage.getItem('topicsFilter')))) {
+      if(!(this.topics = JSON.parse(localStorage.getItem('filterTopics')))) {
         this.topics = [];
       }
     }
@@ -57,10 +57,10 @@ export class FilterPage implements OnInit {
    * @param $event 
    */
   onAutoSaveChange($event) {
-    localStorage.setItem('isAutoSaveFilter', $event.detail.checked);
-    localStorage.setItem('lastAutiSaveFilterDoc', ($event.detail.checked) ? this.questionSet.id : null);
-    localStorage.setItem('currentFilter', this.current.toString());
-    localStorage.setItem('topicsFilter', JSON.stringify(this.topics));
+    localStorage.setItem('filterIsAutoSave', $event.detail.checked);
+    localStorage.setItem('filterLastDoc', ($event.detail.checked) ? this.questionSet.id : null);
+    localStorage.setItem('filterCurrent', this.current.toString());
+    localStorage.setItem('filterTopics', JSON.stringify(this.topics));
   }
 
   /**
@@ -105,10 +105,10 @@ export class FilterPage implements OnInit {
             this.isAutoSave = false;
             this.current = 1;
             this.topics = [];
-            localStorage.setItem('isAutoSaveFilter', this.isAutoSave.toString());
-            localStorage.setItem('lastAutiSaveFilterDoc', null);
-            localStorage.setItem('currentFilter', null);
-            localStorage.setItem('topicsFilter', null);
+            localStorage.setItem('filterIsAutoSave', this.isAutoSave.toString());
+            localStorage.setItem('filterLastDoc', null);
+            localStorage.setItem('filterCurrent', null);
+            localStorage.setItem('filterTopics', null);
           }
         }, 
         {
@@ -153,10 +153,10 @@ export class FilterPage implements OnInit {
   private queryWithTopic(direction: number) {
     // 設置當前頁碼
     this.current += direction;
-    localStorage.setItem('currentFilter', this.current.toString());
+    localStorage.setItem('filterCurrent', this.current.toString());
 
     if(this.isAutoSave && direction === 0) {
-      this.questionService.get(localStorage.getItem('lastAutiSaveFilterDoc'))
+      this.questionService.get(localStorage.getItem('filterLastDoc'))
         .subscribe((result) => {
           this.response = result.payload;
           const data = result.payload.data();
@@ -178,9 +178,9 @@ export class FilterPage implements OnInit {
         })[0];
 
         // 把查到的東西存到localStorage
-        localStorage.setItem('lastAutiSaveFilterDoc', (this.isAutoSave) ? this.questionSet.id : null);    
-        localStorage.setItem('currentFilter', (this.isAutoSave) ? this.current.toString() : null);
-        localStorage.setItem('topicsFilter', (this.isAutoSave) ? JSON.stringify(this.topics) : null);
+        localStorage.setItem('filterLastDoc', (this.isAutoSave) ? this.questionSet.id : null);    
+        localStorage.setItem('filterCurrent', (this.isAutoSave) ? this.current.toString() : null);
+        localStorage.setItem('filterTopics', (this.isAutoSave) ? JSON.stringify(this.topics) : null);
         
         // 初始化是否顯示答案的boolean陣列
         this.isShowAnswer = [];

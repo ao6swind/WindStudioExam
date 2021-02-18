@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-tutorial',
   templateUrl: './tutorial.page.html',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TutorialPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  onBtnStartClicked() {
+    localStorage.setItem('isReadTutorial', 'true');
+    this.router.navigate(['/']);
   }
 
 }
