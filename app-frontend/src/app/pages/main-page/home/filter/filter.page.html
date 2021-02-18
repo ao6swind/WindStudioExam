@@ -1,29 +1,26 @@
 <ion-content>
     <ng-container *ngIf="!questionSet">
-        <div>
+        <div *ngIf="tags">
             <div class="pnl-title">
                 <h3>設定篩選條件</h3>
                 <small>設定完畢後請點擊開始查詢按鈕</small>
             </div>
             <ion-list>
-                <ion-list-header>
-                    <ion-label>主題</ion-label>
-                </ion-list-header>
                 <div class="pnl-topics">
                     <ng-container *ngFor="let level1Tag of tags">
-                        <ion-chip (click)="onBtnAddTopicClicked(level1Tag.text)">
+                        <ion-chip (click)="onBtnAddTopicClicked(level1Tag.text)" [color]="(topics.indexOf(level1Tag.text) > -1) ? 'success': 'dark'" [disabled]="isAutoSave">
                             <ion-icon name="checkmark" *ngIf="(topics.indexOf(level1Tag.text) > -1)"></ion-icon>
                             <ion-label>{{ level1Tag.text }}</ion-label>
                         </ion-chip>
                         <ng-container *ngIf="level1Tag.tags">
                             <ng-container *ngFor="let level2Tag of level1Tag.tags">
-                                <ion-chip (click)="onBtnAddTopicClicked(level2Tag.text)">
+                                <ion-chip (click)="onBtnAddTopicClicked(level2Tag.text)" [color]="(topics.indexOf(level2Tag.text) > -1) ? 'success': 'dark'" [disabled]="isAutoSave">
                                     <ion-icon name="checkmark" *ngIf="(topics.indexOf(level2Tag.text) > -1)"></ion-icon>
                                     <ion-label>{{ level2Tag.text }}</ion-label>
                                 </ion-chip>
                                 <ng-container *ngIf="level2Tag.tags">
                                     <ng-container *ngFor="let level3Tag of level2Tag.tags">
-                                        <ion-chip (click)="onBtnAddTopicClicked(level3Tag.text)">
+                                        <ion-chip (click)="onBtnAddTopicClicked(level3Tag.text)" [color]="(topics.indexOf(level3Tag.text) > -1) ? 'success': 'dark'" [disabled]="isAutoSave">
                                             <ion-icon name="checkmark" *ngIf="(topics.indexOf(level3Tag.text) > -1)"></ion-icon>
                                             <ion-label>{{ level3Tag.text }}</ion-label>
                                         </ion-chip>
@@ -33,7 +30,6 @@
                         </ng-container>
                     </ng-container>
                 </div>
-                
             </ion-list>
             
             <!--
@@ -54,9 +50,13 @@
             </ion-list>
             -->
 
-            <div class="pnl-query ion-text-center">
-                <ion-button (click)="onBtnQueryClicked()" *ngIf="topics.length > 0">
-                    開始查詢
+            <div class="pnl-query ion-text-center" *ngIf="topics.length > 0">
+                <ion-button (click)="onBtnQueryClicked()" [ngSwitch]="isAutoSave">
+                    <ng-container *ngSwitchCase="true">繼續上次進度</ng-container>
+                    <ng-container *ngSwitchCase="false">開始查詢</ng-container>
+                </ion-button>
+                <ion-button [color]="warning" (click)="onBtnResetClicked()" *ngIf="isAutoSave">
+                    重新查詢
                 </ion-button>
             </div>
         </div>

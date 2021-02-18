@@ -24,8 +24,10 @@ export class QuestionPage implements OnInit {
   ) {
     // 先把狀態取出來 
     this.isAutoSave = localStorage.getItem('isAutoSaveQuestion')?.toUpperCase() === 'TRUE';
-    this.response = localStorage.getItem('lastAutiSaveQuestionDoc');
-    
+    if(!(this.current = +localStorage.getItem('currentQuestion'))) {
+      this.current = 1;
+    }
+
     // 再去firebase撈資料
     this.questionService.count().subscribe((count) => {
       this.total = count;
@@ -41,6 +43,8 @@ export class QuestionPage implements OnInit {
    */
   onAutoSaveChange($event) {
     localStorage.setItem('isAutoSaveQuestion', $event.detail.checked);
+    localStorage.setItem('lastAutiSaveQuestionDoc', ($event.detail.checked) ? this.questionSet?.id : null);
+    localStorage.setItem('currentQuestion', this.current.toString());
   }
 
   /**
@@ -64,39 +68,49 @@ export class QuestionPage implements OnInit {
   private query(direction: number) {
     // 設置當前頁碼
     this.current += direction;
+    localStorage.setItem('currentQuestion', this.current.toString());
 
-    this.questionService.list({ 
-      direction,
-      response: this.response
-    }).subscribe((result) => {
-      this.response = result[0]?.payload.doc;
+    if(this.isAutoSave && direction === 0) {
+      this.questionService.get(localStorage.getItem('lastAutiSaveQuestionDoc'))
+        .subscribe((result) => {
+          this.response = result.payload;
+          const data = result.payload.data();
+          const id = result.payload.id;
+          this.questionSet = { id, ...data };
+        });
+    } else {
+      this.questionService.list({ 
+        direction,
+        response: this.response
+      }).subscribe((result) => {
+        this.response = result[0]?.payload.doc;
+        this.questionSet = result.map((actions) => { 
+          const data = actions.payload.doc.data();
+          const id = actions.payload.doc.id;
+          return { id, ...data }; 
+        })[0];
 
-      // 把查到的東西存到localStorage
-      localStorage.setItem('lastAutiSaveQuestionDoc', (this.isAutoSave) ? this.response : null);
-      
-      this.questionSet = result.map((actions) => { 
-        const data = actions.payload.doc.data();
-        const id = actions.payload.doc.id;
-        return { id, ...data }; 
-      })[0];
+        // 把查到的東西存到localStorage
+        localStorage.setItem('lastAutiSaveQuestionDoc', (this.isAutoSave) ? this.questionSet.id : null);
 
-      // 初始化是否顯示答案的boolean陣列
-      this.isShowAnswer = [];
-      this.questionSet?.questions.forEach((question) => {
-        this.isShowAnswer.push(false);
+        // 初始化是否顯示答案的boolean陣列
+        this.isShowAnswer = [];
+        this.questionSet?.questions.forEach((question) => {
+          this.isShowAnswer.push(false);
+        });
+
+        // 如果沒有找到資料就彈出toast提示user
+        if(!this.questionSet) {
+          const toast = this.toastController.create({
+            message: '查無資料',
+            duration: 3000,
+            color: 'danger'
+          });
+          toast.then((t) => {
+            t.present();
+          });
+        }
       });
-
-      // 如果沒有找到資料就彈出toast提示user
-      if(!this.questionSet) {
-        const toast = this.toastController.create({
-          message: '查無資料',
-          duration: 3000,
-          color: 'danger'
-        });
-        toast.then((t) => {
-          t.present();
-        });
-      }
-    });
+    }
   }
 }

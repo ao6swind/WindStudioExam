@@ -12,6 +12,10 @@ export class QuestionService {
 
   constructor(private store: AngularFirestore) { }
 
+  get(id: string) {
+    return this.store.collection<QuestionSet>(this.collection).doc(id).snapshotChanges();
+  }
+
   list(config?: { direction?: number, response: any }) {
     if(config.direction === 1) {
       return this.store.collection<QuestionSet>(this.collection, ref => ref
@@ -27,6 +31,7 @@ export class QuestionService {
       ).snapshotChanges();
     } else {
       if(config.response) {
+        console.log('從上次記錄點出發', config.response);
         return this.store.collection<QuestionSet>(this.collection, ref => ref
           .limit(1)
           .orderBy('createdAt', 'desc')

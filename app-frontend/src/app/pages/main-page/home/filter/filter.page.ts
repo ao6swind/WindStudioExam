@@ -1,9 +1,9 @@
+import { ActionSheetController, ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { QuestionSet, Tag } from 'lib-model';
 
 import { QuestionService } from '../../../../services/question.service';
 import { TagService } from '../../../../services/tag.service';
-import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-filter',
@@ -25,11 +25,20 @@ export class FilterPage implements OnInit {
   constructor(
     private tagService: TagService,
     private questionService: QuestionService,
-    public toastController: ToastController
+    public toastController: ToastController,
+    public actionSheetController: ActionSheetController
   ) { 
     // 先把狀態取出來 
     this.isAutoSave = localStorage.getItem('isAutoSaveFilter')?.toUpperCase() === 'TRUE';
-    this.response = localStorage.getItem('lastAutiSaveFilterDoc');
+    if(this.isAutoSave) {
+      if(!(this.current = +localStorage.getItem('currentFilter'))) {
+        this.current = 1;
+      }
+      if(!(this.topics = JSON.parse(localStorage.getItem('topicsFilter')))) {
+        this.topics = [];
+      }
+    }
+
 
     // 再取出全部的tag讓user來做篩選
     this.tagService.list().subscribe((result) => {
@@ -49,6 +58,9 @@ export class FilterPage implements OnInit {
    */
   onAutoSaveChange($event) {
     localStorage.setItem('isAutoSaveFilter', $event.detail.checked);
+    localStorage.setItem('lastAutiSaveFilterDoc', ($event.detail.checked) ? this.questionSet.id : null);
+    localStorage.setItem('currentFilter', this.current.toString());
+    localStorage.setItem('topicsFilter', JSON.stringify(this.topics));
   }
 
   /**
@@ -76,6 +88,40 @@ export class FilterPage implements OnInit {
       this.total = count;
     });
     this.queryWithTopic(0);
+  }
+
+  /**
+   * 
+   */
+  onBtnResetClicked(): void {
+    const actionSheet = this.actionSheetController.create({
+      header: '這個動作將忘記上次進度，確定要重新查詢嗎？',
+      buttons: [
+        {
+          text: '確定',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.isAutoSave = false;
+            this.current = 1;
+            this.topics = [];
+            localStorage.setItem('isAutoSaveFilter', this.isAutoSave.toString());
+            localStorage.setItem('lastAutiSaveFilterDoc', null);
+            localStorage.setItem('currentFilter', null);
+            localStorage.setItem('topicsFilter', null);
+          }
+        }, 
+        {
+          text: '取消',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => { /* 什麼都不做 */ }
+        }
+      ]
+    })
+    actionSheet.then((a) => {
+      a.present();
+    });
   }
 
   /**
@@ -107,41 +153,53 @@ export class FilterPage implements OnInit {
   private queryWithTopic(direction: number) {
     // 設置當前頁碼
     this.current += direction;
+    localStorage.setItem('currentFilter', this.current.toString());
 
-    this.questionService.listWithTopic({ 
-      direction,
-      type: this.type,
-      topics: this.topics,
-      response: this.response
-    }).subscribe((result) => {
-      this.response = result[0]?.payload.doc;
+    if(this.isAutoSave && direction === 0) {
+      this.questionService.get(localStorage.getItem('lastAutiSaveFilterDoc'))
+        .subscribe((result) => {
+          this.response = result.payload;
+          const data = result.payload.data();
+          const id = result.payload.id;
+          this.questionSet = { id, ...data };
+        });
+    } else {
+      this.questionService.listWithTopic({ 
+        direction,
+        type: this.type,
+        topics: this.topics,
+        response: this.response
+      }).subscribe((result) => {
+        this.response = result[0]?.payload.doc;
+        this.questionSet = result.map((actions) => { 
+          const data = actions.payload.doc.data();
+          const id = actions.payload.doc.id;
+          return { id, ...data }; 
+        })[0];
 
-      // 把查到的東西存到localStorage
-      localStorage.setItem('lastAutiSaveFilterDoc', (this.isAutoSave) ? this.response : null);
-      
-      this.questionSet = result.map((actions) => { 
-        const data = actions.payload.doc.data();
-        const id = actions.payload.doc.id;
-        return { id, ...data }; 
-      })[0];
+        // 把查到的東西存到localStorage
+        localStorage.setItem('lastAutiSaveFilterDoc', (this.isAutoSave) ? this.questionSet.id : null);    
+        localStorage.setItem('currentFilter', (this.isAutoSave) ? this.current.toString() : null);
+        localStorage.setItem('topicsFilter', (this.isAutoSave) ? JSON.stringify(this.topics) : null);
+        
+        // 初始化是否顯示答案的boolean陣列
+        this.isShowAnswer = [];
+        this.questionSet?.questions.forEach((question) => {
+          this.isShowAnswer.push(false);
+        });
 
-      // 初始化是否顯示答案的boolean陣列
-      this.isShowAnswer = [];
-      this.questionSet?.questions.forEach((question) => {
-        this.isShowAnswer.push(false);
+        // 如果沒有找到資料就彈出toast提示user
+        if(!this.questionSet) {
+          const toast = this.toastController.create({
+            message: '查無資料',
+            duration: 3000,
+            color: 'danger'
+          });
+          toast.then((t) => {
+            t.present();
+          });
+        }
       });
-
-      // 如果沒有找到資料就彈出toast提示user
-      if(!this.questionSet) {
-        const toast = this.toastController.create({
-          message: '查無資料',
-          duration: 3000,
-          color: 'danger'
-        });
-        toast.then((t) => {
-          t.present();
-        });
-      }
-    });
+    }
   }
 }
