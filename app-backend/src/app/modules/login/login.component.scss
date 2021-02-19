@@ -1,11 +1,22 @@
-.pnl-login {
+h1 {
+    position: fixed;
+    top: 4rem;
     width: 100vw;
-    height: 100vh;
-    background-image: url("/assets/img/login.svg");
-    background-repeat: no-repeat;
-    background-position: center;
+    z-index: 9;
 }
-
-img {
+.img-login {
+    width: 95%;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+button {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.img-google {
     width: 50px;
 }
