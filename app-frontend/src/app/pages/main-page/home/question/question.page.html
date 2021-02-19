@@ -49,6 +49,12 @@
                         <ion-toggle [(ngModel)]="isShowAnswer[i]"></ion-toggle>
                     </ion-item>
 
+                    <div class="pnl-source" *ngIf="isShowAnswer[i] && questionSet.tags">
+                        <ion-chip *ngFor="let tag of questionSet.tags">
+                            <ion-label>{{ tag }}</ion-label>
+                        </ion-chip>
+                    </div>
+                    
                     <div class="pnl-source" *ngIf="isShowAnswer[i] && question.comment" [innerHtml]="question.comment | getContentView"></div>
                 </ion-list>
             </ion-col>
