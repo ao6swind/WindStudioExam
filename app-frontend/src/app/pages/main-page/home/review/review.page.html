@@ -76,16 +76,6 @@
             [innerHtml]="question.comment | getContentView"></div>
         </ion-list>
       </ion-col>
-
-      <ion-col size="12" class="ion-text-center">
-        <div>
-          <ion-button (click)="onBtnQueryPreviousClicked()" *ngIf="current > 1">上一題</ion-button>
-          <ion-button (click)="onBtnQueryNextClicked()" *ngIf="current < total">下一題</ion-button>
-        </div>
-        <p class="ion-text-center">
-          <small>{{ current }} / {{ total }}</small>
-        </p>
-      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
