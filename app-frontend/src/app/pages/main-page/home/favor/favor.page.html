@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>我的收藏</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngFor="let questionSet of questionSets">
+    <ng-container *ngFor="let question of questionSet.questions">
+      <ion-item-sliding>
+        <ion-item lines="full" detail [routerLink]="['/home/review', questionSet.id]">
+          <ion-label [innerHtml]="question?.content | getContentView"></ion-label>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="onBtnRemoveFavorClicked(questionSet.id)">
+            <ion-icon name="trash"></ion-icon>
+            <ion-text>移除收藏</ion-text>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ng-container>
+  </ng-container>
+  
+</ion-content>

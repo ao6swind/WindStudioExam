@@ -1,8 +1,9 @@
-import { ActionSheetController, ToastController } from '@ionic/angular';
+import { ActionSheetController, IonItemSliding, ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { QuestionSet, Tag } from 'lib-model';
 
 import { QuestionService } from '../../../../services/question.service';
+import { ReportService } from './../../../../services/report.service';
 import { TagService } from '../../../../services/tag.service';
 
 @Component({
@@ -23,6 +24,7 @@ export class FilterPage implements OnInit {
   isShowAnswer: boolean[] = [];
 
   constructor(
+    private reportService: ReportService,
     private tagService: TagService,
     private questionService: QuestionService,
     private toastController: ToastController,
@@ -38,7 +40,6 @@ export class FilterPage implements OnInit {
         this.topics = [];
       }
     }
-
 
     // 再取出全部的tag讓user來做篩選
     this.tagService.list().subscribe((result) => {
@@ -144,6 +145,25 @@ export class FilterPage implements OnInit {
    */
   onBtnShowAnswerClicked(i: number): void {
     this.isShowAnswer[i] = !this.isShowAnswer[i];
+  }
+
+  onBtnReportErrorClicked(item: IonItemSliding) {
+    this.reportService.sendErrorRequest(this.questionSet.id);
+    item.close();
+  }
+
+  onBtnAddToFavorClicked(item: IonItemSliding) {
+    this.questionService.addToFavor(this.questionSet);
+    item.close();
+
+    const toast = this.toastController.create({
+      message: '已加入至收藏',
+      duration: 1500,
+      color: 'secondary'
+    });
+    toast.then((t) => {
+      t.present();
+    });
   }
 
   /**

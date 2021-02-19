@@ -1,17 +1,43 @@
-<ion-content>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>逐題測驗</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="questionSet">
     <ion-item lines="full">
         <ion-label>記住進度</ion-label>
         <ion-toggle [(ngModel)]="isAutoSave" (ionChange)="onAutoSaveChange($event)"></ion-toggle>
     </ion-item>
-    <ion-grid class="pnl-questionset" *ngIf="questionSet">
-        <ion-row>
-            <ion-col size="12" *ngIf="questionSet?.source || questionSet?.url">
-                <div class="pnl-source">
-                    <div><a href="{{ questionSet?.url }}" target="_blank">{{ questionSet?.source }}</a></div>
-                    <div><small>{{ questionSet?.url }}</small></div>
-                </div>
-            </ion-col>
     
+    <ion-item-sliding #item>
+        <ion-item-options side="start">
+            <ion-item-option (click)="onBtnReportErrorClicked(item)">
+                <ion-icon name="mail-outline"></ion-icon>
+                <ion-text>錯題回報</ion-text>
+            </ion-item-option>
+        </ion-item-options>
+
+        <ion-item lines="full">
+            <ion-label>
+                <a class="txt-link" href="{{ questionSet?.url }}" target="_blank">{{ questionSet?.source }}</a>
+                <small>{{ questionSet?.url }}</small>
+            </ion-label>
+        </ion-item>
+    
+        <ion-item-options side="end">
+            <ion-item-option (click)="onBtnAddToFavorClicked(item)">
+                <ion-icon name="heart-outline"></ion-icon>
+                <ion-text>加入收藏</ion-text>
+            </ion-item-option>
+        </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-grid class="pnl-questionset">
+        <ion-row>
             <ion-col size="12" *ngIf="questionSet?.content">
                 <div class="pnl-source" [innerHtml]="questionSet?.content | getContentView"></div>
             </ion-col>

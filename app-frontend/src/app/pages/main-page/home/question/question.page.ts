@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { IonItemSliding, ToastController } from '@ionic/angular';
 
 import { QuestionService } from 'app-frontend/src/app/services/question.service';
 import { QuestionSet } from 'lib-model';
-import { ToastController } from '@ionic/angular';
+import { ReportService } from './../../../../services/report.service';
 
 @Component({
   selector: 'app-question',
@@ -19,13 +20,16 @@ export class QuestionPage implements OnInit {
   isShowAnswer: boolean[] = [];
 
   constructor(
+    private reportService: ReportService,
     private questionService: QuestionService,
-    public toastController: ToastController
+    private toastController: ToastController
   ) {
     // 先把狀態取出來 
     this.isAutoSave = localStorage.getItem('questionIsAutoSave')?.toUpperCase() === 'TRUE';
-    if(!(this.current = +localStorage.getItem('questionCurrent'))) {
-      this.current = 1;
+    if(this.isAutoSave) {
+      if(!(this.current = +localStorage.getItem('questionCurrent'))) {
+        this.current = 1;
+      }
     }
 
     // 再去firebase撈資料
@@ -112,5 +116,24 @@ export class QuestionPage implements OnInit {
         }
       });
     }
+  }
+
+  onBtnReportErrorClicked(item: IonItemSliding) {
+    this.reportService.sendErrorRequest(this.questionSet.id);
+    item.close();
+  }
+
+  onBtnAddToFavorClicked(item: IonItemSliding) {
+    this.questionService.addToFavor(this.questionSet);
+    item.close();
+
+    const toast = this.toastController.create({
+      message: '已加入至收藏',
+      duration: 1500,
+      color: 'secondary'
+    });
+    toast.then((t) => {
+      t.present();
+    });
   }
 }

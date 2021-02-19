@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="favor"></ion-back-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>我的收藏</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="questionSet">
+  <ion-item-sliding #item>
+    <ion-item-options side="start">
+      <ion-item-option (click)="onBtnReportErrorClicked(item)">
+        <ion-icon name="mail-outline"></ion-icon>
+        <ion-text>錯題回報</ion-text>
+      </ion-item-option>
+    </ion-item-options>
+
+    <ion-item lines="full">
+      <ion-label>
+        <a class="txt-link" href="{{ questionSet?.url }}" target="_blank">{{ questionSet?.source }}</a>
+        <small>{{ questionSet?.url }}</small>
+      </ion-label>
+    </ion-item>
+  </ion-item-sliding>
+
+  <ion-grid class="pnl-questionset">
+    <ion-row>
+      <ion-col size="12" *ngIf="questionSet?.content">
+        <div class="pnl-source" [innerHtml]="questionSet?.content | getContentView"></div>
+      </ion-col>
+
+      <ion-col size="12" *ngFor="let question of questionSet?.questions; let i = index">
+        <ion-list>
+          <div class="pnl-source" [innerHtml]="question.content | getContentView"></div>
+
+          <ng-container [ngSwitch]="question.type">
+            <ion-radio-group *ngSwitchCase="2">
+              <ion-item *ngFor="let option of question.options">
+                <ion-radio slot="start" value="{{ option.content }}"></ion-radio>
+                <ion-label>
+                  <div [innerHtml]="option.content | getContentView"></div>
+                </ion-label>
+                <ion-icon slot="end" *ngIf="isShowAnswer[i]" name="{{ option.isAnswer ? 'checkmark' : 'close' }}">
+                </ion-icon>
+              </ion-item>
+            </ion-radio-group>
+
+            <ion-list *ngSwitchCase="3">
+              <ion-item *ngFor="let option of question.options">
+                <ion-checkbox slot="start"></ion-checkbox>
+                <ion-label>
+                  <div [innerHtml]="option.content | getContentView"></div>
+                </ion-label>
+                <ion-icon slot="end" *ngIf="isShowAnswer[i]" name="{{ option.isAnswer ? 'checkmark' : 'close' }}">
+                </ion-icon>
+              </ion-item>
+            </ion-list>
+          </ng-container>
+
+          <ion-item>
+            <ion-label>顯示答案</ion-label>
+            <ion-toggle [(ngModel)]="isShowAnswer[i]"></ion-toggle>
+          </ion-item>
+
+          <div class="pnl-source" *ngIf="isShowAnswer[i] && questionSet.tags">
+            <ion-chip *ngFor="let tag of questionSet.tags">
+              <ion-label>{{ tag }}</ion-label>
+            </ion-chip>
+          </div>
+
+          <div class="pnl-source" *ngIf="isShowAnswer[i] && question.comment"
+            [innerHtml]="question.comment | getContentView"></div>
+        </ion-list>
+      </ion-col>
+
+      <ion-col size="12" class="ion-text-center">
+        <div>
+          <ion-button (click)="onBtnQueryPreviousClicked()" *ngIf="current > 1">上一題</ion-button>
+          <ion-button (click)="onBtnQueryNextClicked()" *ngIf="current < total">下一題</ion-button>
+        </div>
+        <p class="ion-text-center">
+          <small>{{ current }} / {{ total }}</small>
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

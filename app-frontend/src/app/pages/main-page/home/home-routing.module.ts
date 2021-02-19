@@ -21,11 +21,19 @@ const routes: Routes = [
         loadChildren: () => import('./filter/filter.module').then( m => m.FilterPageModule)
       },
       {
+        path: 'favor',
+        loadChildren: () => import('./favor/favor.module').then( m => m.FavorPageModule)
+      },
+      {
+        path: 'review/:id',
+        loadChildren: () => import('./review/review.module').then( m => m.ReviewPageModule)
+      },
+      {
         path: '',
         redirectTo: 'exam'
       }
     ]
-  }
+  },
 ];
 
 @NgModule({
