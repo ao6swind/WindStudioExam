@@ -147,9 +147,14 @@ export class FilterPage implements OnInit {
     this.isShowAnswer[i] = !this.isShowAnswer[i];
   }
 
-  onBtnReportErrorClicked(item: IonItemSliding) {
+  onBtnReportErrorClicked(item: IonItemSliding): void {
     this.reportService.sendErrorRequest(this.questionSet.id);
     item.close();
+  }
+
+  onBtnFilterClicked(): void {
+    this.questionSet = null;
+    this.topics = [];
   }
 
   onBtnAddToFavorClicked(item: IonItemSliding) {
