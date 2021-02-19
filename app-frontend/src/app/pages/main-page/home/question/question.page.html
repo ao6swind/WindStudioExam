@@ -48,24 +48,26 @@
                     
                     <ng-container [ngSwitch]="question.type">
                         <ion-radio-group *ngSwitchCase="2">
-                            <ion-item *ngFor="let option of question.options">
+                            <ion-item *ngFor="let option of question.options; let j = index">
+                                <ion-text slot="start">({{ j + 1 }})</ion-text>
                                 <ion-radio slot="start" value="{{ option.content }}"></ion-radio>
                                 <ion-label>
                                     <div [innerHtml]="option.content | getContentView"></div>
                                 </ion-label>
-                                <ion-icon slot="end" *ngIf="isShowAnswer[i]"
-                                    name="{{ option.isAnswer ? 'checkmark' : 'close' }}"></ion-icon>
+                                <ion-icon slot="end" *ngIf="isShowAnswer[i]" name="{{ option.isAnswer ? 'checkmark' : 'close' }}">
+                                </ion-icon>
                             </ion-item>
                         </ion-radio-group>
-    
+                    
                         <ion-list *ngSwitchCase="3">
-                            <ion-item *ngFor="let option of question.options">
+                            <ion-item *ngFor="let option of question.options; let j = index">
+                                <ion-text slot="start">({{ j + 1 }})</ion-text>
                                 <ion-checkbox slot="start"></ion-checkbox>
                                 <ion-label>
                                     <div [innerHtml]="option.content | getContentView"></div>
                                 </ion-label>
-                                <ion-icon slot="end" *ngIf="isShowAnswer[i]"
-                                    name="{{ option.isAnswer ? 'checkmark' : 'close' }}"></ion-icon>
+                                <ion-icon slot="end" *ngIf="isShowAnswer[i]" name="{{ option.isAnswer ? 'checkmark' : 'close' }}">
+                                </ion-icon>
                             </ion-item>
                         </ion-list>
                     </ng-container>

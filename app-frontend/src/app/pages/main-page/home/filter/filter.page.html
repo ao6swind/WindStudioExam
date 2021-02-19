@@ -1,8 +1,8 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-buttons slot="start" *ngIf="questionSet">
-            <ion-button class="btn-tool" (click)="onBtnFilterClicked()">
-                <ion-icon name="settings-outline"></ion-icon>
+            <ion-button icon-only shape="round" (click)="onBtnFilterClicked()">
+                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
         <ion-title>篩選主題</ion-title>
@@ -123,7 +123,8 @@
 
                         <ng-container [ngSwitch]="question.type">
                             <ion-radio-group *ngSwitchCase="2">
-                                <ion-item *ngFor="let option of question.options">
+                                <ion-item *ngFor="let option of question.options; let j = index">
+                                    <ion-text slot="start">({{ j + 1 }})</ion-text>
                                     <ion-radio slot="start" value="{{ option.content }}"></ion-radio>
                                     <ion-label>
                                         <div [innerHtml]="option.content | getContentView"></div>
@@ -134,7 +135,8 @@
                             </ion-radio-group>
                         
                             <ion-list *ngSwitchCase="3">
-                                <ion-item *ngFor="let option of question.options">
+                                <ion-item *ngFor="let option of question.options; let j = index">
+                                    <ion-text slot="start">({{ j + 1 }})</ion-text>
                                     <ion-checkbox slot="start"></ion-checkbox>
                                     <ion-label>
                                         <div [innerHtml]="option.content | getContentView"></div>
