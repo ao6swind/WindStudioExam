@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
     private router: Router
   ) { 
     this.auth.user.subscribe((user) => {
-      this.user = user.displayName;
+      this.user = user.email;
     });
   }
 

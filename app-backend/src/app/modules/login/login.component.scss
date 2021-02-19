@@ -8,15 +8,13 @@ h1 {
     width: 95%;
     position: fixed;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    bottom: 10%;
+    transform: translate(-50%, 0%);
 }
-button {
+.pnl-login {
+    width: 250px;
     position: fixed;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-.img-google {
-    width: 50px;
+    top: 10%;
+    transform: translate(-50%, 0%);
 }
