@@ -7,7 +7,7 @@
         ],
         "windstudio-exam-manage": [
           "app-backend/dist"
-        ],
+        ]
       }
     }
   },
