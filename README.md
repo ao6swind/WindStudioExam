@@ -90,8 +90,9 @@
 ## ionic capacitor
 
 -   npx cap init
--   npx cap add android
 -   修改 capacitor.config.json 把 ionic 專案輸出指到正確的位置
+-   npx cap add android
+-   npx cap add ios
 
 ## firebase deploy
 

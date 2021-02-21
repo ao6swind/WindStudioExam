@@ -3,8 +3,8 @@
 **/environment.prod.ts
 **/environment.dev.ts
 app-backend/src/assets/ckeditor/**
-public
 android
+ios
 .gradle
 .firebase
 

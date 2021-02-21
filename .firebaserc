@@ -2,9 +2,12 @@
   "targets": {
     "windstudio-exam": {
       "hosting": {
-        "app-backend": [
-          "windstudio-exam"
-        ]
+        "windstudio-exam": [
+          "app-frontend/dist"
+        ],
+        "windstudio-exam-manage": [
+          "app-backend/dist"
+        ],
       }
     }
   },

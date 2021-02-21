@@ -3,7 +3,7 @@
   "appName": "程式設計課程學習資源",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "public/study",
+  "webDir": "app-frontend/dist",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
