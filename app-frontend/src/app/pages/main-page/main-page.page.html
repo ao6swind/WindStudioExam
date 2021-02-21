@@ -15,6 +15,9 @@
           <ion-label>當前版本</ion-label>
           <ion-text>{{ version }}</ion-text>
         </ion-item>
+        <ion-item *ngIf="!isHybrid" class="txt-link" (click)="onBtnInstallClicked()">
+          <ion-label>安裝至桌面</ion-label>
+        </ion-item>
         <ion-item>
           <ion-label>深夜模式</ion-label>
           <ion-toggle [(ngModel)]="isDarkMode" (ionChange)="onDarkModeChange($event)"></ion-toggle>

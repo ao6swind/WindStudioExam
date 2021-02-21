@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Config, Link } from 'lib-model';
 
 import { ActionSheetController } from '@ionic/angular';
@@ -19,7 +19,9 @@ export class MainPagePage implements OnInit {
   links: Link[] = [];
   config: Config = null;
   isHybrid = false;
-
+  isHintShowed = true;
+  promptEvent = null;
+  
   constructor(
     private configService: ConfigService,
     private linkService: LinkService,
@@ -27,13 +29,45 @@ export class MainPagePage implements OnInit {
     private actionSheetController: ActionSheetController,
     private platform: Platform
   ) { 
+    this.isHybrid = this.platform.is('hybrid');
     this.isDarkMode = localStorage.getItem('darkMode')?.toUpperCase() === 'TRUE';
     this.setDarkMode();
   }
 
-  ngOnInit() {
-    this.isHybrid = this.platform.is('hybrid');
+  @HostListener('window:beforeinstallprompt', ['$event'])
+  onBeforeInstallPrompt(event) {
+    event.preventDefault();
+    this.isHintShowed = localStorage.getItem('isHintShowed')?.toLowerCase() === 'true';
+    this.promptEvent = event;
 
+    if(!this.isHybrid && !this.isHintShowed) {
+      const actionSheet = this.actionSheetController.create({
+        header: '此網站可安裝至桌面，你要安裝嗎？',
+        buttons: [
+          {
+            text: '是',
+            role: 'destructive',
+            icon: 'checkmark',
+            handler: () => {
+              this.promptEvent.prompt();
+            }
+          }, 
+          {
+            text: '略過',
+            icon: 'close',
+            role: 'cancel',
+            handler: () => { /* 什麼都不做 */ }
+          }
+        ]
+      })
+      actionSheet.then((a) => {
+        localStorage.setItem('isHintShowed', 'true');
+        a.present();
+      });
+    }
+  }
+
+  ngOnInit() {
     this.linkService.list().subscribe((result) => {
       this.links = result.map((actions) => { 
         const data = actions.payload.doc.data();
@@ -51,7 +85,7 @@ export class MainPagePage implements OnInit {
             {
               text: '是',
               role: 'destructive',
-              icon: 'trash',
+              icon: 'checkmark',
               handler: () => {
                 window.location.href = environment.installer.android
               }
@@ -69,6 +103,12 @@ export class MainPagePage implements OnInit {
         });
       }
     });
+  }
+
+  onBtnInstallClicked() {
+    if(this.promptEvent) {
+      this.promptEvent.prompt();
+    }
   }
 
   onDarkModeChange($event) {
