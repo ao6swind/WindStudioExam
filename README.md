@@ -16,8 +16,9 @@
 
 # 編譯指令
 
--   前台：ionic build --prod
--   後台：ng build --prod
+-   前台：ng build --prod --project=app-frontend
+    -   不知道為什麼 ionic build --prod 會遇到問題 ，先改回 ng build
+-   後台：ng build --prod --project=app-backend
 -   android:
     -   ionic build --prod
     -   npx cap copy
