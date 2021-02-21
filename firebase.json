@@ -2,7 +2,7 @@
   "hosting": [
     {
       "site": "windstudio-exam",
-      "public": "public",
+      "public": "app-frontend/dist",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -11,7 +11,7 @@
     },
     {
       "site": "windstudio-exam-manage",
-      "public": "public/manage",
+      "public": "app-backend/dist",
       "ignore": [
         "firebase.json",
         "**/.*",
