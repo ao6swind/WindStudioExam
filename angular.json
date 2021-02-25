@@ -208,6 +208,10 @@
             "assets": [
               "app-frontend/src/favicon.ico",
               "app-frontend/src/assets",
+              "app-frontend/src/robots.txt",
+              "app-frontend/src/sitemap.xml",
+              "app-frontend/src/googleaa21aa48a043a3b0.html",
+              "app-frontend/src/BingSiteAuth.xml",
               {
                 "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
@@ -320,6 +324,10 @@
             "assets": [
               "app-frontend/src/favicon.ico",
               "app-frontend/src/assets",
+              "app-frontend/src/robots.txt",
+              "app-frontend/src/sitemap.xml",
+              "app-frontend/src/googleaa21aa48a043a3b0.html",
+              "app-frontend/src/BingSiteAuth.xml",
               {
                 "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
