@@ -40,7 +40,7 @@
     -   ionic build
     -   ionic build prod
 -   android
-    -   ionic build --prod
+    -   ng build --prod --project=app-frontend
     -   npx cap copy
     -   npx cap open android
 
