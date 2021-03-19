@@ -66,6 +66,7 @@
 
 -   tsconfig.base.json
     -   compilerOptions -> paths -> lib-model: 新增 lib-model
+    -   修改 compilerOptions.targe 為 es5 (for IE support)
 -   ionic.config.json
     -   參考專案內容
 -   angular.json
@@ -79,6 +80,12 @@
     -   新增 schematics
         -   @ionic/angular-toolkit:component -> styleext: scss
         -   @ionic/angular-toolkit:page -> styleext: scss
+-   .browserslistrc
+    -   not IE 11 改為 IE 11
+-   ployfills.ts
+    -   import 'classlist.js';
+    -   import 'web-animations-js';
+-   firebase.json 指定要部署到哪一個站台
 
 ## Clone ckeditor 5
 
@@ -99,5 +106,4 @@
 
 -   ng build --prod
 -   ionic build --prod
--   到 public 底下把 index.html 中的 base href 換成子目錄
 -   firebase deploy
